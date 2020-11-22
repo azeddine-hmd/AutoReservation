@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/login_fragment">
+
+    <fragment
+        android:id="@+id/login_fragment"
+        android:name="com.innocent.learn.autoreservation.ui.LoginFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_login_fragment_to_reservation_fragment"
+            app:destination="@id/reservation_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/reservation_fragment"
+        android:name="com.innocent.learn.autoreservation.ui.ReservationFragment"
+        android:label="Reservation"
+        tools:layout="@layout/fragment_reservation" >
+        <action
+            android:id="@+id/action_reservation_fragment_to_subscribe_dialog"
+            app:destination="@id/subscribe_dialog" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/bot_fragment"
+        android:name="com.innocent.learn.autoreservation.ui.BotFragment"
+        android:label="Bot"
+        tools:layout="@layout/fragment_bot" />
+
+    <fragment
+        android:id="@+id/settings_fragment"
+        android:name="com.innocent.learn.autoreservation.ui.SettingsFragment"
+        android:label="Settings" />
+
+    <dialog
+        android:id="@+id/subscribe_dialog"
+        android:name="com.innocent.learn.autoreservation.ui.SubscribeDialog"
+        android:label="Subscribe Dialog"
+        tools:layout="@layout/dialog_subscribe" >
+        <argument
+            android:name="slotId"
+            app:argType="integer" />
+    </dialog>
+
+</navigation>

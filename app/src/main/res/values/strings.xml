@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">AutoReservation</string>
+    <string name="cookie_serial_hint">reservation system</string>
+    <string name="cookie_start_button">Login</string>
+    <string name="network_fail_connection">You don\'t have network connection</string>
+    <string name="network_other_errors">Something went wrong while sending request</string>
+    <string name="invalid_reservation_id">Invalid reservation id</string>
+    <string name="options_menu_settings">Settings</string>
+    <string name="bottom_nav_menu_reservation">Reservation</string>
+    <string name="bottom_nav_menu_bot">Bot</string>
+    <string name="options_menu_reset">Reset</string>
+    <string name="settings_preference_notification">Enable bot notification</string>>
+    <string name="settings_preference_mobile_data">Enable sending requests over mobile data</string>
+    <string name="list_item_date">Date :</string>>
+
+    <!--> list item slot <-->
+    <string name="date_text_view">Date: %1$s %2$s-%3$s-%4$s</string>>
+    <string name="time_text_view"><![CDATA[Time: %1$s%2$s —> %3$s%4$s]]></string>
+    <string name="cluster_text_view">Cluster: %d</string>
+    <string name="reserved_places_text_view">Reserved Places: %d/50</string>
+
+    <string name="unsubscribe_button_dialog">Unsubscribe</string>
+    <string name="subscribe_button_dialog">Subscribe</string>
+    <string name="options_menu_dark_mode">Dark Mode</string>
+    <string name="dark_mode">Dark mode not working for now</string>
+</resources>
