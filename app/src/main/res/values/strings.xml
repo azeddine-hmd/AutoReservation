@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">AutoReservation</string>
-    <string name="cookie_serial_hint">reservation system</string>
+    <string name="cookie_serial_hint">reservation id</string>
     <string name="cookie_start_button">Login</string>
     <string name="network_fail_connection">You don\'t have network connection</string>
     <string name="network_other_errors">Something went wrong while sending request</string>
@@ -23,4 +23,7 @@
     <string name="subscribe_button_dialog">Subscribe</string>
     <string name="options_menu_dark_mode">Dark Mode</string>
     <string name="dark_mode">Dark mode not working for now</string>
+    <string name="subscribe_dialog_button_add_bot_list">ADD TO BOT LIST</string>
+    <string name="subscribe_dialog_button_remove_bot_list">REMOVE FROM BOT LIST</string>
+    <string name="bot_start_button">Start</string>
 </resources>

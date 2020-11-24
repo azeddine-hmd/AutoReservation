@@ -1,10 +1,7 @@
 package com.innocent.learn.autoreservation.database
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.innocent.learn.autoreservation.model.Slot
 
 @Dao
@@ -21,4 +18,7 @@ interface ReservationDao {
 
 	@Query("DELETE FROM slot")
 	fun deleteAllSlot()
+
+	@Update
+	fun updateSlot(slot: Slot)
 }

@@ -7,16 +7,21 @@
     android:orientation="vertical"
     tool:context=".ui.LoginFragment">
 
-
     <EditText
         android:id="@+id/cookie_number_edittext"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_margin="16dp"
+        android:autofillHints="enter reservation system"
         android:hint="@string/cookie_serial_hint"
-        android:autofillHints="enter reservation id"
         android:inputType="text"
         tool:ignore="TextFields" />
+
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="@string/cookie_start_button" />
 
 </LinearLayout>

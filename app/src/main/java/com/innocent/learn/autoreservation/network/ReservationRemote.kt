@@ -60,8 +60,25 @@ class ReservationRemote(private val context: Context) {
 		return responseLiveData
 	}
 
-	fun subscribingToSlot(cookie: String, slotId: Int) {
-		val subscribingRequest = reservationApi.subscribingToSlot(cookie, slotId)
+	fun subscribe(cookie: String, slotId: Int) {
+		val subscribingRequest = reservationApi.subscribe(cookie, slotId)
+		subscribingRequest.enqueue(object : Callback<Unit> {
+			override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
+				if (!response.isSuccessful) {
+					responseFailed()
+				} else {
+					//TODO: modify subscribing request return type to string
+				}
+			}
+			override fun onFailure(call: Call<Unit>, t: Throwable) {
+				networkIsNotAvailable()
+			}
+
+		})
+	}
+
+	fun unsubscribe(cookie: String, slotId: Int) {
+		val subscribingRequest = reservationApi.unsubscribe(cookie, slotId)
 		subscribingRequest.enqueue(object : Callback<Unit> {
 			override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
 				if (!response.isSuccessful) {

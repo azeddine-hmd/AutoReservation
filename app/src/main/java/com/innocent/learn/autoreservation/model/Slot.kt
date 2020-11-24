@@ -11,5 +11,6 @@ data class Slot(
 	val end: Date,
 	val cluster: Int,
 	val reservedPlaces: Int,
-	val isSubscribed: Boolean,
+	var isSubscribed: Boolean,
+	var isInBotList: Boolean,
 )

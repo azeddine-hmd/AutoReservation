@@ -18,5 +18,4 @@ object CookiePreference {
 			putString(PREF_COOKIE_RESERVATION_ID, reservationId)
 		}
 	}
-
 }

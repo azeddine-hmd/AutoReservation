@@ -11,12 +11,21 @@ class SubscribeDialogViewModel(private val app: Application) : AndroidViewModel(
 	private val _reservationRepository = ReservationRepository.get()
 	lateinit var getSlotLiveData: LiveData<Slot?>
 
-	fun subscribingToSlot(slotId: Int) {
+	fun subscribe(slotId: Int) {
 		val reservationId = CookiePreference.getStoredReservationId(app)
-		_reservationRepository.subscribingToSlot("reservation_system=$reservationId", slotId)
+		_reservationRepository.subscribe("reservation_system=$reservationId", slotId)
+	}
+
+	fun unsubscribe(slotId: Int) {
+		val reservationId = CookiePreference.getStoredReservationId(app)
+		_reservationRepository.unsubscribe("reservation_system=$reservationId", slotId)
 	}
 
 	fun getSlot(slotId: Int) {
 		getSlotLiveData = _reservationRepository.getSlot(slotId)
+	}
+
+	fun updateSlot(slot: Slot) {
+		_reservationRepository.updateSlot(slot)
 	}
 }

@@ -59,7 +59,7 @@ class ReservationDeserializer : JsonDeserializer<Slots> {
 
 				val isSubscribed = slotJsonObject.get("is_subscribed").asBoolean
 
-				slotsList.add(Slot(id, begin, end, cluster, reservedPlaces, isSubscribed))
+				slotsList.add(Slot(id, begin, end, cluster, reservedPlaces, isSubscribed, false))
 			}
 		}
 		return Slots(slotsList.toList())

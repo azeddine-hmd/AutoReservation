@@ -1,10 +1,7 @@
 package com.innocent.learn.autoreservation.network.api.ftnetwork
 
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface ReservationApi {
 
@@ -12,5 +9,8 @@ interface ReservationApi {
 	fun fetchReservation(@Header("Cookie") reservationId: String): Call<Slots>
 
 	@POST("/api/me/events/{id}")
-	fun subscribingToSlot(@Header("Cookie") reservationId: String, @Path("id") slotId: Int): Call<Unit>
+	fun subscribe(@Header("Cookie") reservationId: String, @Path("id") slotId: Int): Call<Unit>
+
+	@DELETE("/api/me/events/{id}")
+	fun unsubscribe(@Header("Cookie") reservationId: String, @Path("id") slotId: Int): Call<Unit>
 }

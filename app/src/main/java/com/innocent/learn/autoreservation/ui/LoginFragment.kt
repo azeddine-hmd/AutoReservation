@@ -7,6 +7,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -19,6 +20,7 @@ import com.innocent.learn.autoreservation.viewmodel.LoginFragmentViewModel
 class LoginFragment : Fragment() {
 	private lateinit var loginFragmentViewModel: LoginFragmentViewModel
 	private lateinit var cookieEditText: EditText
+	private lateinit var loginButton: Button
 	private lateinit var reservationId: String
 
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +40,20 @@ class LoginFragment : Fragment() {
 		val view = inflater.inflate(R.layout.fragment_login, container, false)
 		cookieEditText = view.findViewById(R.id.cookie_number_edittext)
 		cookieEditText.setText(reservationId)
+		loginButton = view.findViewById(R.id.login_button)
+		loginButton.setOnClickListener {
+			if (loginFragmentViewModel.isValideReservationId(reservationId)) {
+				loginFragmentViewModel.fetchSlots(reservationId)
+			} else {
+				val toast = Toast.makeText(
+					requireContext(),
+					R.string.invalid_reservation_id,
+					Toast.LENGTH_SHORT
+				)
+				toast.setGravity(Gravity.TOP, 0, 10)
+				toast.show()
+			}
+		}
 		loginFragmentViewModel.slotsLiveData.observe(
 			viewLifecycleOwner, { _ ->
 				CookiePreference.setReservationId(requireContext(), reservationId)
@@ -54,18 +70,6 @@ class LoginFragment : Fragment() {
 			override fun afterTextChanged(s: Editable?) {}
 			override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 				reservationId = s.toString()
-				if (loginFragmentViewModel.isValideReservationId(reservationId)) {
-					CookiePreference.setReservationId(requireContext(), reservationId)
-					loginFragmentViewModel.fetchSlots(reservationId)
-				} else {
-					val toast = Toast.makeText(
-						requireContext(),
-						R.string.invalid_reservation_id,
-						Toast.LENGTH_SHORT
-					)
-					toast.setGravity(Gravity.TOP, 0, 10)
-					toast.show()
-				}
 			}
 		})
 	}

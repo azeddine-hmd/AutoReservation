@@ -19,12 +19,15 @@ class ReservationRepository private constructor(context: Context) {
 		ReservationDatabase::class.java,
 		DATABASE_NAME
 	).build()
+
 	private val reservationDao: ReservationDao = reservationDatabase.reservationDao()
 	private val executor = Executors.newSingleThreadExecutor()
 
 	fun fetchSlots(cookie: String): LiveData<List<Slot>> = reservationRemote.fetchSlots(cookie)
 
-	fun subscribingToSlot(cookie: String, slotId: Int) = reservationRemote.subscribingToSlot(cookie, slotId)
+	fun subscribe(cookie: String, slotId: Int) = reservationRemote.subscribe(cookie, slotId)
+
+	fun unsubscribe(cookie: String, slotId: Int) = reservationRemote.unsubscribe(cookie, slotId)
 
 	fun getSlotList(): LiveData<List<Slot>> = reservationDao.getSlotList()
 
@@ -39,6 +42,12 @@ class ReservationRepository private constructor(context: Context) {
 	fun deleteAllSlot() {
 		executor.execute {
 			reservationDao.deleteAllSlot()
+		}
+	}
+
+	fun updateSlot(slot: Slot) {
+		executor.execute {
+			reservationDao.updateSlot(slot)
 		}
 	}
 

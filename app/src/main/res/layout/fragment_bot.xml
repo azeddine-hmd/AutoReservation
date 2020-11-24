@@ -4,13 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     tool:context=".ui.BotFragment">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_weight="1"
+        android:background="@drawable/custom_border" />
+
+    <Button
+        android:id="@+id/bot_start_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Empty for now"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+        android:layout_margin="8dp"
+        android:layout_weight="0"
+        android:text="@string/bot_start_button" />
 
 </LinearLayout>
