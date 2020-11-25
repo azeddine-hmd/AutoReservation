@@ -5,17 +5,17 @@
     <item
         android:id="@+id/options_menu_dark_mode"
         android:title="@string/options_menu_dark_mode"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/options_menu_reset"
         android:title="@string/options_menu_reset"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/settings_fragment"
-        android:title="@string/options_menu_settings"
         android:menuCategory="secondary"
+        android:title="@string/options_menu_settings"
         app:showAsAction="never" />
 
 </menu>

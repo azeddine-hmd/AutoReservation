@@ -51,6 +51,12 @@ class ReservationRepository private constructor(context: Context) {
 		}
 	}
 
+	fun addSlotList(slotList: List<Slot>) {
+		executor.execute {
+			reservationDao.addSlotList(slotList)
+		}
+	}
+
 	companion object {
 		private var instance: ReservationRepository? = null
 

@@ -21,4 +21,7 @@ interface ReservationDao {
 
 	@Update
 	fun updateSlot(slot: Slot)
+
+	@Insert(onConflict = OnConflictStrategy.REPLACE)
+	fun addSlotList(slotList: List<Slot>)
 }

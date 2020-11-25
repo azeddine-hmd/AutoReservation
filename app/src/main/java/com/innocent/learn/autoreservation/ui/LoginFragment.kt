@@ -12,6 +12,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.innocent.learn.autoreservation.R
 import com.innocent.learn.autoreservation.utils.CookiePreference
@@ -54,12 +55,13 @@ class LoginFragment : Fragment() {
 				toast.show()
 			}
 		}
-		loginFragmentViewModel.slotsLiveData.observe(
-			viewLifecycleOwner, { _ ->
-				CookiePreference.setReservationId(requireContext(), reservationId)
-				moveToNextFragment()
-			}
-		)
+		loginFragmentViewModel.slotListLiveData.observe(
+			viewLifecycleOwner
+		) { slotList ->
+			CookiePreference.setReservationId(requireContext(), reservationId)
+			loginFragmentViewModel.addSlotList(slotList)
+			moveToNextFragment()
+		}
 		return view
 	}
 

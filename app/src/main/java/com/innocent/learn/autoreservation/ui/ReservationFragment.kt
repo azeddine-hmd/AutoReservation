@@ -1,20 +1,20 @@
 package com.innocent.learn.autoreservation.ui
 
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.innocent.learn.autoreservation.R
 import com.innocent.learn.autoreservation.model.Slot
 import com.innocent.learn.autoreservation.viewmodel.ReservationFragmentViewModel
@@ -24,16 +24,23 @@ import java.util.*
 private const val TAG = "ReservationFragment"
 
 class ReservationFragment : Fragment() {
+	private lateinit var swipeRefresh: SwipeRefreshLayout
 	private lateinit var reservationFragmentViewModel: ReservationFragmentViewModel
 	private lateinit var slotListAdapter: ListAdapter<Slot, SlotViewHolder>
+	private lateinit var oldSlotList: List<Slot>
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		reservationFragmentViewModel =
 			ViewModelProvider(this).get(ReservationFragmentViewModel::class.java)
+		reservationFragmentViewModel.getSlotList.observe(
+			this
+		) { slotList ->
+			Log.d(TAG, "Got list of slot from database")
+			slotListAdapter.submitList(slotList)
+		}
 	}
 
-	@RequiresApi(Build.VERSION_CODES.N)
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
@@ -45,17 +52,35 @@ class ReservationFragment : Fragment() {
 			layoutManager = LinearLayoutManager(requireContext())
 			adapter = slotListAdapter
 		}
-		reservationFragmentViewModel.slotsLiveData.observe(
-			viewLifecycleOwner, { slotList ->
-				val mutableSlotList = slotList.toMutableList()
-				val currentDate = Date()
-				mutableSlotList.removeIf { it.begin.before(currentDate) }
-				slotListAdapter.submitList(mutableSlotList)
-				reservationFragmentViewModel.addSlotList(slotList)
-			}
-		)
-		reservationFragmentViewModel.fetchSlots()
+		swipeRefresh = view.findViewById(R.id.swipe_refresh)
+		swipeRefresh.setOnRefreshListener {
+			reservationFragmentViewModel.fetchSlots()
+		}
+		reservationFragmentViewModel.fetchedSlotList.observe(viewLifecycleOwner) { newSlotList ->
+			Log.d(TAG, "items refreshed successfully")
+
+			// update slots in database accordingly
+			reservationFragmentViewModel.deleteAllSlots()
+			val slotList = getSlotListWithoutConflict(oldSlotList, newSlotList)
+			reservationFragmentViewModel.addSlotList(slotList)
+
+			swipeRefresh.isRefreshing = false
+		}
 		return view
+	}
+
+	private fun getSlotListWithoutConflict(oldSlotList: List<Slot>, newSlotList: List<Slot>): List<Slot> {
+		val slotList = mutableListOf<Slot>()
+
+		for (newSlot in newSlotList) {
+			for (oldSlot in oldSlotList)  {
+				if (newSlot.id == oldSlot.id) {
+					//TODO: implement it later.
+				}
+			}
+		}
+
+		return slotList.toList()
 	}
 
 	private inner class SlotViewHolder(item: View) : RecyclerView.ViewHolder(item),
@@ -75,14 +100,11 @@ class ReservationFragment : Fragment() {
 			this.slot = slot
 
 			val dayOfWeek = SimpleDateFormat("EEE", Locale.getDefault()).format(slot.begin)
-			Log.d(TAG, "dayOfWeek is $dayOfWeek")
 			val day = SimpleDateFormat("dd", Locale.getDefault()).format(slot.begin)
 			val month = SimpleDateFormat("MM", Locale.getDefault()).format(slot.begin)
 			val year = SimpleDateFormat("yyyy", Locale.getDefault()).format(slot.begin)
-
 			val hourStartTime = SimpleDateFormat("HH", Locale.getDefault()).format(slot.begin)
 			val hourStartNoon = SimpleDateFormat("a", Locale.getDefault()).format(slot.begin)
-
 			val hourEndTime = SimpleDateFormat("HH", Locale.getDefault()).format(slot.end)
 			val hourEndNoon = SimpleDateFormat("a", Locale.getDefault()).format(slot.end)
 
@@ -100,8 +122,8 @@ class ReservationFragment : Fragment() {
 		}
 
 		override fun onClick(v: View?) {
-			Log.d(TAG, "onClick: ")
-			val action = ReservationFragmentDirections.actionReservationFragmentToSubscribeDialog(slot.id)
+			val action =
+				ReservationFragmentDirections.actionReservationFragmentToSubscribeDialog(slot.id)
 			findNavController().navigate(action)
 		}
 	}

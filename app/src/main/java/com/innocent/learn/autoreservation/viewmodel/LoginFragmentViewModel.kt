@@ -16,7 +16,7 @@ class LoginFragmentViewModel(private val app: Application) : AndroidViewModel(ap
 	private val _reservationRepository = ReservationRepository.get()
 	private val mutableReservationId = MutableLiveData<String>()
 
-	val slotsLiveData: LiveData<List<Slot>> =
+	val slotListLiveData: LiveData<List<Slot>> =
 		Transformations.switchMap(mutableReservationId) { reservationId ->
 			_reservationRepository.fetchSlots("reservation_system=$reservationId")
 		}
@@ -39,5 +39,9 @@ class LoginFragmentViewModel(private val app: Application) : AndroidViewModel(ap
 			return true
 		}
 		return false
+	}
+
+	fun addSlotList(slotList: List<Slot>) {
+		_reservationRepository.addSlotList(slotList)
 	}
 }

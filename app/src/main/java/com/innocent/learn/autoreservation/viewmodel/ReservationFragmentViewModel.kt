@@ -13,7 +13,9 @@ class ReservationFragmentViewModel(private val app: Application) : AndroidViewMo
 	private val _reservationRepository = ReservationRepository.get()
 	private val _mutableReservationId = MutableLiveData<String>()
 
-	val slotsLiveData: LiveData<List<Slot>> =
+	val getSlotList: LiveData<List<Slot>> = _reservationRepository.getSlotList()
+
+	val fetchedSlotList: LiveData<List<Slot>> =
 		Transformations.switchMap(_mutableReservationId) { reservationId ->
 			_reservationRepository.fetchSlots("reservation_system=$reservationId")
 		}
@@ -23,12 +25,11 @@ class ReservationFragmentViewModel(private val app: Application) : AndroidViewMo
 		_mutableReservationId.value = reservationId
 	}
 
-	fun addSlotList(slotList: List<Slot>?) {
+	fun addSlotList(slotList: List<Slot>) {
+		_reservationRepository.addSlotList(slotList)
+	}
+
+	fun deleteAllSlots() {
 		_reservationRepository.deleteAllSlot()
-		if (slotList != null) {
-			for (slot in slotList) {
-				_reservationRepository.addSlot(slot)
-			}
-		}
 	}
 }

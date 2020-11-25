@@ -26,4 +26,5 @@
     <string name="subscribe_dialog_button_add_bot_list">ADD TO BOT LIST</string>
     <string name="subscribe_dialog_button_remove_bot_list">REMOVE FROM BOT LIST</string>
     <string name="bot_start_button">Start</string>
+    <string name="options_menu_refresh">Refresh</string>
 </resources>
