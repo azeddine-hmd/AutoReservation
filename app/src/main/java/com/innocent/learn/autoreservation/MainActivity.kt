@@ -1,7 +1,6 @@
 package com.innocent.learn.autoreservation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
@@ -9,7 +8,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.get
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -39,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 			setOf(
 				R.id.login_fragment,
 				R.id.reservation_fragment,
-				R.id.bot_fragment
+				R.id.bot_fragment,
 			)
 		)
 		setupActionBarWithNavController(this, navController, appBarConfiguration)

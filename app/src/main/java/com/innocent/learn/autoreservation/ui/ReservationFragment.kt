@@ -19,7 +19,7 @@ import com.innocent.learn.autoreservation.R
 import com.innocent.learn.autoreservation.model.Slot
 import com.innocent.learn.autoreservation.viewmodel.ReservationFragmentViewModel
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
 
 private const val TAG = "ReservationFragment"
 
@@ -27,7 +27,7 @@ class ReservationFragment : Fragment() {
 	private lateinit var swipeRefresh: SwipeRefreshLayout
 	private lateinit var reservationFragmentViewModel: ReservationFragmentViewModel
 	private lateinit var slotListAdapter: ListAdapter<Slot, SlotViewHolder>
-	private lateinit var oldSlotList: List<Slot>
+	private lateinit var slotList: List<Slot>
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -37,6 +37,7 @@ class ReservationFragment : Fragment() {
 			this
 		) { slotList ->
 			Log.d(TAG, "Got list of slot from database")
+			this.slotList = slotList
 			slotListAdapter.submitList(slotList)
 		}
 	}
@@ -47,35 +48,47 @@ class ReservationFragment : Fragment() {
 		savedInstanceState: Bundle?
 	): View? {
 		val view = inflater.inflate(R.layout.fragment_reservation, container, false)
+
 		slotListAdapter = SlotListAdapter(SlotDiffCallback())
 		view.findViewById<RecyclerView>(R.id.recycler_view).apply {
 			layoutManager = LinearLayoutManager(requireContext())
 			adapter = slotListAdapter
 		}
+
 		swipeRefresh = view.findViewById(R.id.swipe_refresh)
 		swipeRefresh.setOnRefreshListener {
 			reservationFragmentViewModel.fetchSlots()
 		}
+
+		// observing live data
 		reservationFragmentViewModel.fetchedSlotList.observe(viewLifecycleOwner) { newSlotList ->
 			Log.d(TAG, "items refreshed successfully")
 
 			// update slots in database accordingly
 			reservationFragmentViewModel.deleteAllSlots()
-			val slotList = getSlotListWithoutConflict(oldSlotList, newSlotList)
+			val slotList = updateSlotListWithoutConflict(this.slotList, newSlotList)
 			reservationFragmentViewModel.addSlotList(slotList)
 
+			// stop swipe refresh icon
 			swipeRefresh.isRefreshing = false
 		}
+
 		return view
 	}
 
-	private fun getSlotListWithoutConflict(oldSlotList: List<Slot>, newSlotList: List<Slot>): List<Slot> {
+	private fun updateSlotListWithoutConflict(
+		oldSlotList: List<Slot>,
+		newSlotList: List<Slot>
+	): List<Slot> {
 		val slotList = mutableListOf<Slot>()
 
 		for (newSlot in newSlotList) {
-			for (oldSlot in oldSlotList)  {
-				if (newSlot.id == oldSlot.id) {
-					//TODO: implement it later.
+			for (oldSlot in oldSlotList) {
+				if (newSlot.id == oldSlot.id && oldSlot.isInBotList) {
+					newSlot.isInBotList = true
+					slotList.add(newSlot)
+				} else {
+					slotList.add(newSlot)
 				}
 			}
 		}
@@ -107,21 +120,25 @@ class ReservationFragment : Fragment() {
 			val hourStartNoon = SimpleDateFormat("a", Locale.getDefault()).format(slot.begin)
 			val hourEndTime = SimpleDateFormat("HH", Locale.getDefault()).format(slot.end)
 			val hourEndNoon = SimpleDateFormat("a", Locale.getDefault()).format(slot.end)
-
-			dateTextView.text = getString(R.string.date_text_view, dayOfWeek, day, month, year)
-			timeTextView.text = getString(
-				R.string.time_text_view,
-				hourStartTime,
-				hourStartNoon,
-				hourEndTime,
-				hourEndNoon
-			)
+			dateTextView.text =
+				getString(R.string.date_text_view, dayOfWeek, day, month, year); timeTextView.text =
+				getString(
+					R.string.time_text_view,
+					hourStartTime,
+					hourStartNoon,
+					hourEndTime,
+					hourEndNoon
+				)
 			clusterTextView.text = getString(R.string.cluster_text_view, slot.cluster)
 			reservedPlacesTextView.text =
 				getString(R.string.reserved_places_text_view, slot.reservedPlaces)
 		}
 
 		override fun onClick(v: View?) {
+			showSubscriptionDialog()
+		}
+
+		private fun showSubscriptionDialog() {
 			val action =
 				ReservationFragmentDirections.actionReservationFragmentToSubscribeDialog(slot.id)
 			findNavController().navigate(action)

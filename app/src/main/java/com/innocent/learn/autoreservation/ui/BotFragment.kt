@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.RecyclerView
 import com.innocent.learn.autoreservation.R
 import com.innocent.learn.autoreservation.model.Slot
@@ -24,7 +25,7 @@ class BotFragment : Fragment() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		botFragmentViewModel = ViewModelProvider(this).get(BotFragmentViewModel::class.java)
-		botFragmentViewModel.botSlotLiveData.observe(this, { slotList ->
+		botFragmentViewModel.botSlotLiveData.observe(this) { slotList ->
 			val mutableSlotList = mutableListOf<Slot>()
 			for (slot in slotList) {
 				if (slot.isInBotList) {
@@ -33,7 +34,7 @@ class BotFragment : Fragment() {
 			}
 			botSlotList = mutableSlotList.toList()
 			Log.d(TAG, "$botSlotList")
-		})
+		}
 	}
 
 	override fun onCreateView(

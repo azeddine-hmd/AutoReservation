@@ -13,7 +13,8 @@
         <action
             android:id="@+id/action_login_fragment_to_reservation_fragment"
             app:destination="@id/reservation_fragment"
-            app:popUpToInclusive="true" />
+            app:popUpTo="@id/settings_fragment"
+            app:popUpToInclusive="false" />
     </fragment>
 
     <fragment

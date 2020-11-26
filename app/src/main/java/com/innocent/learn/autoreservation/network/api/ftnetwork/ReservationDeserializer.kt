@@ -41,7 +41,7 @@ class ReservationDeserializer : JsonDeserializer<Slots> {
 				var end = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
 					.parse(endString) ?: Date()
 
-				// adding one hour to begin date
+				// adding one hour to "begin date"
 				val calendarEnd = Calendar.getInstance()
 				calendarEnd.time = end
 				calendarEnd.add(Calendar.HOUR_OF_DAY, 1)

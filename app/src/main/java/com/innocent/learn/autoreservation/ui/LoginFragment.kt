@@ -29,7 +29,7 @@ class LoginFragment : Fragment() {
 		loginFragmentViewModel = ViewModelProvider(this).get(LoginFragmentViewModel::class.java)
 		reservationId = CookiePreference.getStoredReservationId(requireContext())
 		if (loginFragmentViewModel.isValideReservationId(reservationId)) {
-			moveToNextFragment()
+			moveToReservationFragment()
 		}
 	}
 
@@ -39,9 +39,32 @@ class LoginFragment : Fragment() {
 		savedInstanceState: Bundle?
 	): View? {
 		val view = inflater.inflate(R.layout.fragment_login, container, false)
+
 		cookieEditText = view.findViewById(R.id.cookie_number_edittext)
-		cookieEditText.setText(reservationId)
 		loginButton = view.findViewById(R.id.login_button)
+
+		cookieEditText.setText(reservationId)
+
+		loginFragmentViewModel.slotListLiveData.observe(
+			viewLifecycleOwner
+		) { slotList ->
+			loginFragmentViewModel.addSlotList(slotList)
+			moveToReservationFragment()
+		}
+
+		return view
+	}
+
+
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
+		cookieEditText.addTextChangedListener(object : TextWatcher {
+			override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+			override fun afterTextChanged(s: Editable?) {}
+			override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+				reservationId = s.toString()
+			}
+		})
 		loginButton.setOnClickListener {
 			if (loginFragmentViewModel.isValideReservationId(reservationId)) {
 				loginFragmentViewModel.fetchSlots(reservationId)
@@ -55,28 +78,10 @@ class LoginFragment : Fragment() {
 				toast.show()
 			}
 		}
-		loginFragmentViewModel.slotListLiveData.observe(
-			viewLifecycleOwner
-		) { slotList ->
-			CookiePreference.setReservationId(requireContext(), reservationId)
-			loginFragmentViewModel.addSlotList(slotList)
-			moveToNextFragment()
-		}
-		return view
 	}
 
-	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-		super.onViewCreated(view, savedInstanceState)
-		cookieEditText.addTextChangedListener(object : TextWatcher {
-			override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-			override fun afterTextChanged(s: Editable?) {}
-			override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-				reservationId = s.toString()
-			}
-		})
-	}
-
-	private fun moveToNextFragment() {
+	private fun moveToReservationFragment() {
+		CookiePreference.setReservationId(requireContext(), reservationId)
 		val action = LoginFragmentDirections.actionLoginFragmentToReservationFragment()
 		findNavController().navigate(action)
 	}
