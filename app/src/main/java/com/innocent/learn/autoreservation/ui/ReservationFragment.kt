@@ -1,6 +1,7 @@
 package com.innocent.learn.autoreservation.ui
 
 import android.os.Bundle
+import android.service.autofill.Validators.not
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +20,7 @@ import com.innocent.learn.autoreservation.R
 import com.innocent.learn.autoreservation.model.Slot
 import com.innocent.learn.autoreservation.viewmodel.ReservationFragmentViewModel
 import java.text.SimpleDateFormat
-import java.util.Locale
+import java.util.*
 
 private const val TAG = "ReservationFragment"
 
@@ -31,14 +32,13 @@ class ReservationFragment : Fragment() {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		reservationFragmentViewModel =
-			ViewModelProvider(this).get(ReservationFragmentViewModel::class.java)
-		reservationFragmentViewModel.getSlotList.observe(
-			this
-		) { slotList ->
-			Log.d(TAG, "Got list of slot from database")
-			this.slotList = slotList
-			slotListAdapter.submitList(slotList)
+
+		reservationFragmentViewModel = ViewModelProvider(this)
+			.get(ReservationFragmentViewModel::class.java)
+
+		reservationFragmentViewModel.getSlotList.observe(this) { slotList ->
+			val filteredSlotList = filterSlotList(slotList)
+			updateSlotList(filteredSlotList)
 		}
 	}
 
@@ -49,18 +49,21 @@ class ReservationFragment : Fragment() {
 	): View? {
 		val view = inflater.inflate(R.layout.fragment_reservation, container, false)
 
+		swipeRefresh = view.findViewById(R.id.swipe_refresh)
 		slotListAdapter = SlotListAdapter(SlotDiffCallback())
 		view.findViewById<RecyclerView>(R.id.recycler_view).apply {
 			layoutManager = LinearLayoutManager(requireContext())
 			adapter = slotListAdapter
 		}
 
-		swipeRefresh = view.findViewById(R.id.swipe_refresh)
+		return view
+	}
+
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
 		swipeRefresh.setOnRefreshListener {
 			reservationFragmentViewModel.fetchSlots()
 		}
-
-		// observing live data
 		reservationFragmentViewModel.fetchedSlotList.observe(viewLifecycleOwner) { newSlotList ->
 			Log.d(TAG, "items refreshed successfully")
 
@@ -72,8 +75,6 @@ class ReservationFragment : Fragment() {
 			// stop swipe refresh icon
 			swipeRefresh.isRefreshing = false
 		}
-
-		return view
 	}
 
 	private fun updateSlotListWithoutConflict(
@@ -95,6 +96,26 @@ class ReservationFragment : Fragment() {
 
 		return slotList.toList()
 	}
+
+	private fun filterSlotList(oldSlotList: List<Slot>): List<Slot> {
+		val newSlotList = mutableListOf<Slot>()
+		val currentDate = Date()
+
+
+		for (oldSlot in oldSlotList) {
+			if (!oldSlot.begin.before(currentDate)) {
+				newSlotList.add(oldSlot)
+			}
+		}
+
+		return newSlotList
+	}
+
+	private fun updateSlotList(slotList: List<Slot>) {
+		this.slotList = slotList
+		slotListAdapter.submitList(this.slotList)
+	}
+
 
 	private inner class SlotViewHolder(item: View) : RecyclerView.ViewHolder(item),
 		View.OnClickListener {
