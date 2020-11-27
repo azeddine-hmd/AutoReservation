@@ -28,4 +28,5 @@ class SubscribeDialogViewModel(private val app: Application) : AndroidViewModel(
 	fun updateSlot(slot: Slot) {
 		_reservationRepository.updateSlot(slot)
 	}
+
 }

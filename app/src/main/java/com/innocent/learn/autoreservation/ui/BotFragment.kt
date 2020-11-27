@@ -47,4 +47,5 @@ class BotFragment : Fragment() {
 		startBotButton = view.findViewById(R.id.bot_start_button)
 		return view
 	}
+
 }

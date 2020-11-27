@@ -8,4 +8,5 @@ import com.innocent.learn.autoreservation.model.Slot
 abstract class ReservationDatabase : RoomDatabase() {
 
 	abstract fun reservationDao(): ReservationDao
+
 }

@@ -10,4 +10,5 @@ class AutoReservationApplication : Application() {
 		super.onCreate()
 		ReservationRepository.initialize(this)
 	}
+
 }

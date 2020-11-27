@@ -43,4 +43,5 @@ class LoginFragmentViewModel(private val app: Application) : AndroidViewModel(ap
 	fun addSlotList(slotList: List<Slot>) {
 		_reservationRepository.addSlotList(slotList)
 	}
+
 }

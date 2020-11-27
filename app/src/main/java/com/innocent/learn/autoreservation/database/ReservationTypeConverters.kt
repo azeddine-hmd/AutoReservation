@@ -4,6 +4,7 @@ import androidx.room.TypeConverter
 import java.util.Date
 
 class ReservationTypeConverters {
+
 	@TypeConverter
 	fun fromDate(date: Date?): Long? = date?.time
 
@@ -11,4 +12,5 @@ class ReservationTypeConverters {
 	fun toDate(millisSinceEpoch: Long?): Date? = millisSinceEpoch?.let {
 		return Date(it)
 	}
+
 }

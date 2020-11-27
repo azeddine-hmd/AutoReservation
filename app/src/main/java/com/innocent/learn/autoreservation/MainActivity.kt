@@ -75,4 +75,5 @@ class MainActivity : AppCompatActivity() {
 			else -> item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
 		}
 	}
+
 }

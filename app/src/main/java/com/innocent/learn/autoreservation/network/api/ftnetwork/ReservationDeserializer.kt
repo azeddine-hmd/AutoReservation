@@ -64,4 +64,5 @@ class ReservationDeserializer : JsonDeserializer<Slots> {
 		}
 		return Slots(slotsList.toList())
 	}
+
 }

@@ -13,4 +13,5 @@ interface ReservationApi {
 
 	@DELETE("/api/me/events/{id}")
 	fun unsubscribe(@Header("Cookie") reservationId: String, @Path("id") slotId: Int): Call<Unit>
+
 }

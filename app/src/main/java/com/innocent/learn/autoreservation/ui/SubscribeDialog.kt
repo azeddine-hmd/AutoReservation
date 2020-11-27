@@ -126,4 +126,5 @@ class SubscribeDialog : BottomSheetDialogFragment() {
 		reservedPlacesTextView.text =
 			getString(R.string.reserved_places_text_view, slot.reservedPlaces)
 	}
+
 }

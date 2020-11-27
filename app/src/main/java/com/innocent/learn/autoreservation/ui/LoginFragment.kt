@@ -16,6 +16,7 @@ import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.innocent.learn.autoreservation.R
 import com.innocent.learn.autoreservation.utils.CookiePreference
+import com.innocent.learn.autoreservation.utils.CustomToast
 import com.innocent.learn.autoreservation.viewmodel.LoginFragmentViewModel
 
 private const val TAG = "LoginFragment"
@@ -71,13 +72,7 @@ class LoginFragment : Fragment() {
 			if (viewModel.isValideReservationId(reservationId)) {
 				viewModel.fetchSlots(reservationId)
 			} else {
-				val toast = Toast.makeText(
-					requireContext(),
-					R.string.invalid_reservation_id,
-					Toast.LENGTH_SHORT
-				)
-				toast.setGravity(Gravity.TOP, 0, 10)
-				toast.show()
+				CustomToast.showError(requireContext(), R.string.invalid_reservation_id)
 			}
 		}
 	}
@@ -87,4 +82,5 @@ class LoginFragment : Fragment() {
 		val action = LoginFragmentDirections.actionLoginFragmentToReservationFragment()
 		findNavController().navigate(action)
 	}
+
 }
