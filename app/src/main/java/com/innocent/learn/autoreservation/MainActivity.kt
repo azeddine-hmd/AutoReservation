@@ -52,9 +52,6 @@ class MainActivity : AppCompatActivity() {
 					bottomNavigation.visibility = View.GONE
 					toolbar.visibility = View.GONE
 				}
-				R.id.settings_fragment -> {
-					bottomNavigation.visibility = View.GONE
-				}
 				else -> {
 					bottomNavigation.visibility = View.VISIBLE
 					toolbar.visibility = View.VISIBLE
@@ -73,12 +70,6 @@ class MainActivity : AppCompatActivity() {
 			R.id.options_menu_reset -> {
 				CookiePreference.setReservationId(this, "")
 				navController.navigate(R.id.login_fragment)
-				return true
-			}
-			R.id.options_menu_dark_mode -> {
-				val toast = Toast.makeText(this, R.string.dark_mode, Toast.LENGTH_LONG)
-				toast.setGravity(Gravity.TOP, 0, 20)
-				toast.show()
 				return true
 			}
 			else -> item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)

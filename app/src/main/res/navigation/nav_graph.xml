@@ -9,19 +9,17 @@
         android:id="@+id/login_fragment"
         android:name="com.innocent.learn.autoreservation.ui.LoginFragment"
         android:label="Login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_login_fragment_to_reservation_fragment"
-            app:destination="@id/reservation_fragment"
-            app:popUpTo="@id/settings_fragment"
-            app:popUpToInclusive="false" />
+            app:destination="@id/reservation_fragment" />
     </fragment>
 
     <fragment
         android:id="@+id/reservation_fragment"
         android:name="com.innocent.learn.autoreservation.ui.ReservationFragment"
         android:label="Reservation"
-        tools:layout="@layout/fragment_reservation" >
+        tools:layout="@layout/fragment_reservation">
         <action
             android:id="@+id/action_reservation_fragment_to_subscribe_dialog"
             app:destination="@id/subscribe_dialog" />
@@ -37,7 +35,7 @@
         android:id="@+id/subscribe_dialog"
         android:name="com.innocent.learn.autoreservation.ui.SubscribeDialog"
         android:label="Subscribe Dialog"
-        tools:layout="@layout/dialog_subscribe" >
+        tools:layout="@layout/dialog_subscribe">
         <argument
             android:name="slotId"
             app:argType="integer" />

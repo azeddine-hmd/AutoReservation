@@ -15,7 +15,6 @@ private const val RESERVATION_ID_MAX_LENGTH = 428
 class LoginFragmentViewModel(private val app: Application) : AndroidViewModel(app) {
 	private val _reservationRepository = ReservationRepository.get()
 	private val mutableReservationId = MutableLiveData<String>()
-
 	val slotListLiveData: LiveData<List<Slot>> =
 		Transformations.switchMap(mutableReservationId) { reservationId ->
 			_reservationRepository.fetchSlots("reservation_system=$reservationId")

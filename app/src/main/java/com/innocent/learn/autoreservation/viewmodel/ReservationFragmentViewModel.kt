@@ -13,9 +13,8 @@ import java.util.*
 class ReservationFragmentViewModel(private val app: Application) : AndroidViewModel(app) {
 	private val _reservationRepository = ReservationRepository.get()
 	private val _mutableReservationId = MutableLiveData<String>()
-
 	val getSlotList: LiveData<List<Slot>> = _reservationRepository.getSlotList()
-
+	var slotList: List<Slot> = emptyList()
 	val fetchedSlotList: LiveData<List<Slot>> =
 		Transformations.switchMap(_mutableReservationId) { reservationId ->
 			_reservationRepository.fetchSlots("reservation_system=$reservationId")
@@ -51,7 +50,7 @@ class ReservationFragmentViewModel(private val app: Application) : AndroidViewMo
 		return slotList.toList()
 	}
 
-	fun filterSlotList(oldSlotList: List<Slot>): List<Slot> {
+	fun filterSlotListDependsOnTime(oldSlotList: List<Slot>): List<Slot> {
 		val newSlotList = mutableListOf<Slot>()
 		val currentDate = Date()
 

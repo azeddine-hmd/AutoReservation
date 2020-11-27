@@ -23,7 +23,6 @@ class ReservationFragment : Fragment() {
 	private lateinit var swipeRefresh: SwipeRefreshLayout
 	private lateinit var viewModel: ReservationFragmentViewModel
 	private lateinit var slotListAdapter: ListAdapter<Slot, SlotListAdapter.SlotViewHolder>
-	private lateinit var slotList: List<Slot>
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -32,7 +31,7 @@ class ReservationFragment : Fragment() {
 			.get(ReservationFragmentViewModel::class.java)
 
 		viewModel.getSlotList.observe(this) { slotList ->
-			val filteredSlotList = viewModel.filterSlotList(slotList)
+			val filteredSlotList = viewModel.filterSlotListDependsOnTime(slotList)
 			updateUI(filteredSlotList)
 		}
 	}
@@ -62,7 +61,7 @@ class ReservationFragment : Fragment() {
 		}
 
 		viewModel.fetchedSlotList.observe(viewLifecycleOwner) { newSlotList ->
-			val slotList = viewModel.updateSlotList(this.slotList, newSlotList)
+			val slotList = viewModel.updateSlotList(viewModel.slotList, newSlotList)
 			Log.d(TAG, "items refreshed successfully: $slotList")
 
 			// update slot list in database
@@ -74,8 +73,8 @@ class ReservationFragment : Fragment() {
 	}
 
 	private fun updateUI(slotList: List<Slot>) {
-		this.slotList = slotList
-		slotListAdapter.submitList(this.slotList)
+		viewModel.slotList = slotList
+		slotListAdapter.submitList(viewModel.slotList)
 	}
 
 }
