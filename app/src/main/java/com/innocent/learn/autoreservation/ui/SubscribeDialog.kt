@@ -2,13 +2,13 @@ package com.innocent.learn.autoreservation.ui
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.innocent.learn.autoreservation.R
@@ -17,11 +17,10 @@ import com.innocent.learn.autoreservation.viewmodel.SubscribeDialogViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-private const val TAG = "SubscribeDialog"
 private const val INITIAL_COLOR = -16743049
 
 class SubscribeDialog : BottomSheetDialogFragment() {
-	private lateinit var subscribeDialogViewModel: SubscribeDialogViewModel
+	private lateinit var viewModel: SubscribeDialogViewModel
 	private lateinit var subscribeButton: Button
 	private lateinit var cancelButton: Button
 	private val args: SubscribeDialogArgs by navArgs()
@@ -34,10 +33,10 @@ class SubscribeDialog : BottomSheetDialogFragment() {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		subscribeDialogViewModel = ViewModelProvider(this)
+		viewModel = ViewModelProvider(this)
 			.get(SubscribeDialogViewModel::class.java)
-		subscribeDialogViewModel.getSlot(args.slotId)
-		subscribeDialogViewModel.getSlotLiveData.observe(this, { slot ->
+		viewModel.getSlot(args.slotId)
+		viewModel.getSlotLiveData.observe(this) { slot ->
 			if (slot != null) {
 				this.slot = slot
 
@@ -59,7 +58,7 @@ class SubscribeDialog : BottomSheetDialogFragment() {
 					addBotToListButton.setTextColor(INITIAL_COLOR)
 				}
 			}
-		})
+		}
 	}
 
 	override fun onCreateView(
@@ -79,10 +78,10 @@ class SubscribeDialog : BottomSheetDialogFragment() {
 		addBotToListButton.setOnClickListener {
 			if (slot.isInBotList) {
 				slot.isInBotList = false
-				subscribeDialogViewModel.updateSlot(slot)
+				viewModel.updateSlot(slot)
 			} else {
 				slot.isInBotList = true
-				subscribeDialogViewModel.updateSlot(slot)
+				viewModel.updateSlot(slot)
 			}
 		}
 
@@ -93,12 +92,12 @@ class SubscribeDialog : BottomSheetDialogFragment() {
 		subscribeButton.setOnClickListener {
 			if (slot.isSubscribed) {
 				slot.isSubscribed = false
-				subscribeDialogViewModel.unsubscribe(slot.id)
-				subscribeDialogViewModel.updateSlot(slot)
+				viewModel.unsubscribe(slot.id)
+				viewModel.updateSlot(slot)
 			} else {
 				slot.isSubscribed = true
-				subscribeDialogViewModel.subscribe(slot.id)
-				subscribeDialogViewModel.updateSlot(slot)
+				viewModel.subscribe(slot.id)
+				viewModel.updateSlot(slot)
 			}
 		}
 

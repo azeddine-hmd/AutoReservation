@@ -18,17 +18,19 @@ import com.innocent.learn.autoreservation.R
 import com.innocent.learn.autoreservation.utils.CookiePreference
 import com.innocent.learn.autoreservation.viewmodel.LoginFragmentViewModel
 
+private const val TAG = "LoginFragment"
+
 class LoginFragment : Fragment() {
-	private lateinit var loginFragmentViewModel: LoginFragmentViewModel
+	private lateinit var viewModel: LoginFragmentViewModel
 	private lateinit var cookieEditText: EditText
 	private lateinit var loginButton: Button
 	private lateinit var reservationId: String
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		loginFragmentViewModel = ViewModelProvider(this).get(LoginFragmentViewModel::class.java)
+		viewModel = ViewModelProvider(this).get(LoginFragmentViewModel::class.java)
 		reservationId = CookiePreference.getStoredReservationId(requireContext())
-		if (loginFragmentViewModel.isValideReservationId(reservationId)) {
+		if (viewModel.isValideReservationId(reservationId)) {
 			moveToReservationFragment()
 		}
 	}
@@ -45,10 +47,10 @@ class LoginFragment : Fragment() {
 
 		cookieEditText.setText(reservationId)
 
-		loginFragmentViewModel.slotListLiveData.observe(
+		viewModel.slotListLiveData.observe(
 			viewLifecycleOwner
 		) { slotList ->
-			loginFragmentViewModel.addSlotList(slotList)
+			viewModel.addSlotList(slotList)
 			moveToReservationFragment()
 		}
 
@@ -66,8 +68,8 @@ class LoginFragment : Fragment() {
 			}
 		})
 		loginButton.setOnClickListener {
-			if (loginFragmentViewModel.isValideReservationId(reservationId)) {
-				loginFragmentViewModel.fetchSlots(reservationId)
+			if (viewModel.isValideReservationId(reservationId)) {
+				viewModel.fetchSlots(reservationId)
 			} else {
 				val toast = Toast.makeText(
 					requireContext(),

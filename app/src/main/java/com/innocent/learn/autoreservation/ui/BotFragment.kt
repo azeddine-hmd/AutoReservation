@@ -20,12 +20,12 @@ class BotFragment : Fragment() {
 	private lateinit var recyclerView: RecyclerView
 	private lateinit var startBotButton: Button
 	private lateinit var botSlotList: List<Slot>
-	private lateinit var botFragmentViewModel: BotFragmentViewModel
+	private lateinit var viewModel: BotFragmentViewModel
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		botFragmentViewModel = ViewModelProvider(this).get(BotFragmentViewModel::class.java)
-		botFragmentViewModel.botSlotLiveData.observe(this) { slotList ->
+		viewModel = ViewModelProvider(this).get(BotFragmentViewModel::class.java)
+		viewModel.botSlotLiveData.observe(this) { slotList ->
 			val mutableSlotList = mutableListOf<Slot>()
 			for (slot in slotList) {
 				if (slot.isInBotList) {

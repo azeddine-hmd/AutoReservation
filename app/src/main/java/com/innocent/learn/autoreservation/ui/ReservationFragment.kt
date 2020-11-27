@@ -57,7 +57,6 @@ class ReservationFragment : Fragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
-		// listeners
 		swipeRefresh.setOnRefreshListener {
 			viewModel.fetchSlots()
 		}

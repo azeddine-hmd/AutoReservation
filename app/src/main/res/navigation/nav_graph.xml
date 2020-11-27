@@ -33,11 +33,6 @@
         android:label="Bot"
         tools:layout="@layout/fragment_bot" />
 
-    <fragment
-        android:id="@+id/settings_fragment"
-        android:name="com.innocent.learn.autoreservation.ui.SettingsFragment"
-        android:label="Settings" />
-
     <dialog
         android:id="@+id/subscribe_dialog"
         android:name="com.innocent.learn.autoreservation.ui.SubscribeDialog"
