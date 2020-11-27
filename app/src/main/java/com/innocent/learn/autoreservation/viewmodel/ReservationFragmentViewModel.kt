@@ -8,6 +8,7 @@ import androidx.lifecycle.Transformations
 import com.innocent.learn.autoreservation.model.Slot
 import com.innocent.learn.autoreservation.repositories.ReservationRepository
 import com.innocent.learn.autoreservation.utils.CookiePreference
+import java.util.*
 
 class ReservationFragmentViewModel(private val app: Application) : AndroidViewModel(app) {
 	private val _reservationRepository = ReservationRepository.get()
@@ -26,10 +27,42 @@ class ReservationFragmentViewModel(private val app: Application) : AndroidViewMo
 	}
 
 	fun addSlotList(slotList: List<Slot>) {
+		_reservationRepository.deleteAllSlot()
 		_reservationRepository.addSlotList(slotList)
 	}
 
-	fun deleteAllSlots() {
-		_reservationRepository.deleteAllSlot()
+	fun updateSlotList(
+		oldSlotList: List<Slot>,
+		newSlotList: List<Slot>
+	): List<Slot> {
+		val slotList = mutableListOf<Slot>()
+
+		for (newSlot in newSlotList) {
+			for (oldSlot in oldSlotList) {
+				if (newSlot.id == oldSlot.id && oldSlot.isInBotList) {
+					newSlot.isInBotList = true
+					slotList.add(newSlot)
+				} else {
+					slotList.add(newSlot)
+				}
+			}
+		}
+
+		return slotList.toList()
 	}
+
+	fun filterSlotList(oldSlotList: List<Slot>): List<Slot> {
+		val newSlotList = mutableListOf<Slot>()
+		val currentDate = Date()
+
+
+		for (oldSlot in oldSlotList) {
+			if (!oldSlot.begin.before(currentDate)) {
+				newSlotList.add(oldSlot)
+			}
+		}
+
+		return newSlotList
+	}
+
 }

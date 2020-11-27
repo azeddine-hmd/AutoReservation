@@ -19,9 +19,10 @@ class ReservationRepository private constructor(context: Context) {
 		ReservationDatabase::class.java,
 		DATABASE_NAME
 	).build()
-
 	private val reservationDao: ReservationDao = reservationDatabase.reservationDao()
 	private val executor = Executors.newSingleThreadExecutor()
+
+	// network
 
 	fun fetchSlots(cookie: String): LiveData<List<Slot>> = reservationRemote.fetchSlots(cookie)
 
@@ -29,14 +30,14 @@ class ReservationRepository private constructor(context: Context) {
 
 	fun unsubscribe(cookie: String, slotId: Int) = reservationRemote.unsubscribe(cookie, slotId)
 
+	// database
+
 	fun getSlotList(): LiveData<List<Slot>> = reservationDao.getSlotList()
 
 	fun getSlot(id: Int): LiveData<Slot?> = reservationDao.getSlot(id)
 
 	fun addSlot(slot: Slot) {
-		executor.execute {
-			reservationDao.addSlot(slot)
-		}
+		reservationDao.addSlot(slot)
 	}
 
 	fun deleteAllSlot() {
@@ -71,4 +72,5 @@ class ReservationRepository private constructor(context: Context) {
 				?: throw IllegalStateException("ReservationRepository must be initialized")
 		}
 	}
+
 }
