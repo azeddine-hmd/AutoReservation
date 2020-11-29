@@ -21,10 +21,10 @@ class LoginFragmentViewModel(private val app: Application) : AndroidViewModel(ap
 	}
 
 	fun isValidReservationId(reservationId: String): Boolean {
-		val reservationIdAfterTrim = reservationId.trim()
-		if (reservationIdAfterTrim.length == RESERVATION_ID_MAX_LENGTH
-			&& reservationIdAfterTrim.isNotEmpty()
-			&& reservationIdAfterTrim.last() == '='
+		val reservationIdTrimmed = reservationId.trim()
+		if (reservationIdTrimmed.length == RESERVATION_ID_MAX_LENGTH
+			&& reservationIdTrimmed.isNotEmpty()
+			&& reservationIdTrimmed.last() == '='
 		) {
 			return true
 		}

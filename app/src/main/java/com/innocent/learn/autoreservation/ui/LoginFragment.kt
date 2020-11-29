@@ -52,8 +52,7 @@ class LoginFragment : Fragment() {
 		})
 		loginButton.setOnClickListener {
 			if (viewModel.isValidReservationId(reservationId)) {
-				val slotListLiveData = viewModel.fetchSlotList(reservationId)
-				slotListLiveData.observe(viewLifecycleOwner) { slotList ->
+				viewModel.fetchSlotList(reservationId).observe(viewLifecycleOwner) { slotList ->
 					viewModel.addSlotList(slotList)
 					moveToReservationFragment()
 				}

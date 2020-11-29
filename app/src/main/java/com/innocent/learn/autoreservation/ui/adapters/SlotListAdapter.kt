@@ -74,14 +74,13 @@ class SlotListAdapter(private val context: Context, slotDiffCallback: SlotDiffCa
 		}
 
 		override fun onClick(v: View?) {
-			val navController = itemView.findNavController()
-			showSubscriptionDialog(navController)
+			showSubscriptionDialog()
 		}
 
-		private fun showSubscriptionDialog(navController: NavController) {
+		private fun showSubscriptionDialog() {
 			val action =
 				ReservationFragmentDirections.actionReservationFragmentToSubscribeDialog(slot.id)
-			navController.navigate(action)
+			itemView.findNavController().navigate(action)
 		}
 	}
 

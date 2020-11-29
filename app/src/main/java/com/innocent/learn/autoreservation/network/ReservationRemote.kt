@@ -63,6 +63,7 @@ class ReservationRemote(private val context: Context) {
 			}
 
 			override fun onFailure(call: Call<Slots>, t: Throwable) {
+				responseLiveData.value = emptyList()
 				CustomToast.showError(context, R.string.network_fail_connection)
 			}
 		})

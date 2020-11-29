@@ -5,12 +5,11 @@
     <string name="network_fail_connection">You don\'t have network connection</string>
     <string name="network_other_errors">Something went wrong while sending request</string>
     <string name="invalid_reservation_id">Invalid reservation id</string>
-    <string name="options_menu_settings">Settings</string>
     <string name="options_menu_reset">Reset</string>
     <string name="bottom_nav_menu_reservation">Reservation</string>
     <string name="bottom_nav_menu_bot">Bot</string>
-    <string name="list_item_date">Date :</string>>
-    <string name="date_text_view">Date: %1$s %2$s-%3$s-%4$s</string>>
+    <string name="list_item_date">Date: %s</string>
+    <string name="date_text_view">Date: %1$s %2$s-%3$s-%4$s</string>
     <string name="time_text_view"><![CDATA[Time: %1$s%2$s —> %3$s%4$s]]></string>
     <string name="cluster_text_view">Cluster: %d</string>
     <string name="reserved_places_text_view">Reserved Places: %d/50</string>
@@ -22,6 +21,6 @@
     <string name="subscribe_dialog_button_remove_bot_list">REMOVE FROM BOT LIST</string>
     <string name="bot_start_button">Start</string>
     <string name="options_menu_refresh">Refresh</string>
-    <string name="subscribe_toast">You have subscribed successfully</string>
-    <string name="unsubscribe_toast">You have unsubscribed successfully</string>
+    <string name="subscribe_toast">subscribed successfully</string>
+    <string name="unsubscribe_toast">unsubscribed successfully</string>
 </resources>

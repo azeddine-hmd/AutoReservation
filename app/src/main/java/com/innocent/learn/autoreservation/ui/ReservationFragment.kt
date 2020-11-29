@@ -51,11 +51,14 @@ class ReservationFragment : Fragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		swipeRefresh.setOnRefreshListener {
-			val slotListLiveData = viewModel.fetchSlotList
-			slotListLiveData.observe(viewLifecycleOwner) { newSlotList ->
-				val slotList = viewModel.updateSlotList(viewModel.slotList, newSlotList)
-				viewModel.addSlotList(slotList) // update slot list in database
-				swipeRefresh.isRefreshing = false // stop swipe refresh icon animation after receiving slot list
+			viewModel.fetchSlotList.observe(viewLifecycleOwner) { newSlotList ->
+				if (newSlotList.isNotEmpty()) {
+					val updatedSlotList = viewModel.updateSlotList(viewModel.slotList, newSlotList)
+					// update slot list in database
+					viewModel.addSlotList(updatedSlotList)
+				}
+				// stop swipe refresh icon animation after receiving slot list
+				swipeRefresh.isRefreshing = false
 			}
 		}
 	}
