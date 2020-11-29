@@ -6,6 +6,7 @@ import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.innocent.learn.autoreservation.model.Slot
 import com.innocent.learn.autoreservation.utils.CustomToast
+import org.json.JSONObject
 import java.lang.reflect.Type
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -69,6 +70,17 @@ class SlotDeserializer : JsonDeserializer<Slot> {
 			return Slot(id, begin, end, cluster, reservedPlaces, isSubscribed, false)
 		}
 		return Slot(0, Date(), Date(), 0, 0, false, false)
+	}
+
+	companion object {
+
+		fun deserializeJsonError(errorBody: String?): String {
+			errorBody?.let { errorJson ->
+				return JSONObject(errorJson).get("message").toString()
+			}
+			return ""
+		}
+
 	}
 
 }

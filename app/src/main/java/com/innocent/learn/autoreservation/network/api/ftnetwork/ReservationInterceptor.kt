@@ -10,7 +10,7 @@ class ReservationInterceptor() : Interceptor {
 	override fun intercept(chain: Interceptor.Chain): Response {
 		val request = chain.request()
 
-		// write code below for intercepting network requests
+		// write code below for inspecting network requests
 
 		return chain.proceed(chain.request())
 	}

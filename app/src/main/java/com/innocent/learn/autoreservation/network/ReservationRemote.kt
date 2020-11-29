@@ -9,7 +9,7 @@ import com.google.gson.GsonBuilder
 import com.innocent.learn.autoreservation.R
 import com.innocent.learn.autoreservation.model.Slot
 import com.innocent.learn.autoreservation.network.api.ftnetwork.*
-import com.innocent.learn.autoreservation.network.api.ftnetwork.SlotsDeserializer.Companion.deserializeJsonError
+import com.innocent.learn.autoreservation.network.api.ftnetwork.SlotDeserializer.Companion.deserializeJsonError
 import com.innocent.learn.autoreservation.utils.CustomToast
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -27,7 +27,6 @@ class ReservationRemote(private val context: Context) {
 
 	init {
 		val gson: Gson = GsonBuilder()
-			.registerTypeAdapter(Slots::class.java, SlotsDeserializer())
 			.registerTypeAdapter(Slot::class.java, SlotDeserializer())
 			.create()
 
@@ -49,20 +48,20 @@ class ReservationRemote(private val context: Context) {
 
 	fun fetchSlotList(cookie: String): LiveData<List<Slot>> {
 		val responseLiveData = MutableLiveData<List<Slot>>()
-		val reservationRequest: Call<Slots> = reservationApi.fetchReservation(cookie)
+		val reservationRequest: Call<List<Slot>> = reservationApi.fetchReservation(cookie)
 
-		reservationRequest.enqueue(object : Callback<Slots> {
-			override fun onResponse(call: Call<Slots>, response: Response<Slots>) {
+		reservationRequest.enqueue(object : Callback<List<Slot>> {
+			override fun onResponse(call: Call<List<Slot>>, response: Response<List<Slot>>) {
 				if (response.isSuccessful) {
-					val slots: Slots? = response.body()
-					val slotsList: List<Slot> = slots?.slots ?: emptyList()
+					val slotList: List<Slot>? = response.body()
+					val slotsList: List<Slot> = slotList ?: emptyList()
 					responseLiveData.value = slotsList
 				} else {
 					CustomToast.showError(context, R.string.network_other_errors)
 				}
 			}
 
-			override fun onFailure(call: Call<Slots>, t: Throwable) {
+			override fun onFailure(call: Call<List<Slot>>, t: Throwable) {
 				responseLiveData.value = emptyList()
 				CustomToast.showError(context, R.string.network_fail_connection)
 			}
@@ -89,7 +88,6 @@ class ReservationRemote(private val context: Context) {
 
 			override fun onFailure(call: Call<Slot>, t: Throwable) {
 				CustomToast.showError(context, R.string.network_fail_connection)
-				Log.e(TAG, "onFailure: stack trace -> ${t.printStackTrace()}\n message -> ${t.message}", )
 			}
 
 		})
@@ -115,7 +113,6 @@ class ReservationRemote(private val context: Context) {
 
 			override fun onFailure(call: Call<Slot>, t: Throwable) {
 				CustomToast.showError(context, R.string.network_fail_connection)
-				Log.e(TAG, "onFailure: stack trace -> ${t.stackTrace}\n message -> ${t.message}", )
 			}
 
 		})

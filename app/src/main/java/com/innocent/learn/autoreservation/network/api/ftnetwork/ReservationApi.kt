@@ -7,7 +7,7 @@ import retrofit2.http.*
 interface ReservationApi {
 
 	@GET("/api/me/events")
-	fun fetchReservation(@Header("Cookie") reservationId: String): Call<Slots>
+	fun fetchReservation(@Header("Cookie") reservationId: String): Call<List<Slot>>
 
 	@POST("/api/me/events/{id}")
 	fun subscribe(@Header("Cookie") reservationId: String, @Path("id") slotId: Int): Call<Slot>
