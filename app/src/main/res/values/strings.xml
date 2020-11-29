@@ -22,4 +22,6 @@
     <string name="subscribe_dialog_button_remove_bot_list">REMOVE FROM BOT LIST</string>
     <string name="bot_start_button">Start</string>
     <string name="options_menu_refresh">Refresh</string>
+    <string name="subscribe_toast">You have subscribed successfully</string>
+    <string name="unsubscribe_toast">You have unsubscribed successfully</string>
 </resources>

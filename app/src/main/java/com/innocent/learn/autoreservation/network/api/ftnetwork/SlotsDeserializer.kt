@@ -1,19 +1,27 @@
 package com.innocent.learn.autoreservation.network.api.ftnetwork
 
+import android.util.Log
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.innocent.learn.autoreservation.model.Slot
+import org.json.JSONObject
 import java.lang.reflect.Type
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
-class ReservationDeserializer : JsonDeserializer<Slots> {
+private const val TAG = "ReservationDeserializer"
+
+class SlotsDeserializer : JsonDeserializer<Slots> {
+
 	override fun deserialize(
 		json: JsonElement?,
 		typeOfT: Type?,
 		context: JsonDeserializationContext?
 	): Slots {
+		Log.d(TAG, "deserialize: type is $typeOfT")
 		val slotsList = mutableListOf<Slot>()
 		val slotsJsonArray = json?.asJsonArray
 		if (slotsJsonArray != null) {
@@ -63,6 +71,17 @@ class ReservationDeserializer : JsonDeserializer<Slots> {
 			}
 		}
 		return Slots(slotsList.toList())
+	}
+
+	companion object {
+
+		fun deserializeJsonError(errorBody: String?): String {
+			errorBody?.let { errorBody ->
+				return JSONObject(errorBody).get("message").toString()
+			}
+			return ""
+		}
+
 	}
 
 }

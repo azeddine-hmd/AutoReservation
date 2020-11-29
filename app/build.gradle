@@ -40,17 +40,14 @@ dependencies {
     def appcompt_version = "1.2.0"
     def lifecycle_version = "2.2.0"
     def retrofit_version = "2.9.0"
-    def gson_converter_version = "2.9.0"
     def preference_version = "1.1.1"
     def room_version = "2.2.5"
     def nav_version = "2.3.1"
-    //def constraint_version = "2.0.4"
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "androidx.core:core-ktx:$core_version"
     implementation "androidx.appcompat:appcompat:$appcompt_version"
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
     // Navigation Component
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
@@ -61,7 +58,8 @@ dependencies {
 
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-gson:$gson_converter_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-scalars:$retrofit_version"
 
     // Preference
     implementation "androidx.preference:preference-ktx:$preference_version"
@@ -70,6 +68,9 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
+
+    // layouts
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

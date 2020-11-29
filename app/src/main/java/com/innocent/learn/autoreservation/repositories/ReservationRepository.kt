@@ -24,11 +24,11 @@ class ReservationRepository private constructor(context: Context) {
 
 	// network
 
-	fun fetchSlots(cookie: String): LiveData<List<Slot>> = reservationRemote.fetchSlots(cookie)
+	fun fetchSlotList(cookie: String): LiveData<List<Slot>> = reservationRemote.fetchSlotList(cookie)
 
-	fun subscribe(cookie: String, slotId: Int) = reservationRemote.subscribe(cookie, slotId)
+	fun subscribe(cookie: String, slotId: Int): LiveData<Slot> = reservationRemote.subscribe(cookie, slotId)
 
-	fun unsubscribe(cookie: String, slotId: Int) = reservationRemote.unsubscribe(cookie, slotId)
+	fun unsubscribe(cookie: String, slotId: Int): LiveData<Slot> = reservationRemote.unsubscribe(cookie, slotId)
 
 	// database
 
