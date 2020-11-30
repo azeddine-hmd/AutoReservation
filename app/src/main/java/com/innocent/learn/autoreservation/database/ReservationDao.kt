@@ -10,6 +10,9 @@ interface ReservationDao {
 	@Query("SELECT * FROM slot")
 	fun getSlotList(): LiveData<List<Slot>>
 
+	@Query("SELECT * FROM slot WHERE isInBotList = 1")
+	fun getBotList(): LiveData<List<Slot>>
+
 	@Query("SELECT * FROM slot WHERE id = :id")
 	fun getSlot(id: Int): LiveData<Slot?>
 

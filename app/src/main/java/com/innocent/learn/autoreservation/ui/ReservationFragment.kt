@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -19,9 +18,9 @@ import com.innocent.learn.autoreservation.viewmodel.ReservationFragmentViewModel
 private const val TAG = "ReservationFragment"
 
 class ReservationFragment : Fragment() {
-	private lateinit var swipeRefresh: SwipeRefreshLayout
 	private lateinit var viewModel: ReservationFragmentViewModel
 	private lateinit var slotListAdapter: ListAdapter<Slot, SlotListAdapter.SlotViewHolder>
+	private lateinit var swipeRefresh: SwipeRefreshLayout
 
 
 	override fun onCreate(savedInstanceState: Bundle?) {

@@ -34,6 +34,8 @@ class ReservationRepository private constructor(context: Context) {
 
 	fun getSlotList(): LiveData<List<Slot>> = reservationDao.getSlotList()
 
+	fun getBotList(): LiveData<List<Slot>> = reservationDao.getBotList()
+
 	fun getSlot(id: Int): LiveData<Slot?> = reservationDao.getSlot(id)
 
 	fun addSlot(slot: Slot) {

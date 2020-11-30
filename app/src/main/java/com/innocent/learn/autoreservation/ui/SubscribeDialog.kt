@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.innocent.learn.autoreservation.R
@@ -32,9 +31,9 @@ enum class InBotListButtonState {
 
 class SubscribeDialog : BottomSheetDialogFragment() {
 	private lateinit var viewModel: SubscribeDialogViewModel
+	private val args: SubscribeDialogArgs by navArgs()
 	private lateinit var subscribeButton: Button
 	private lateinit var cancelButton: Button
-	private val args: SubscribeDialogArgs by navArgs()
 	private lateinit var slot: Slot
 	private lateinit var dateTextView: TextView
 	private lateinit var timeTextView: TextView
@@ -51,7 +50,7 @@ class SubscribeDialog : BottomSheetDialogFragment() {
 		viewModel.slotLiveData.observe(this) { slot ->
 			if (slot != null) {
 				this.slot = slot
-				setSlotTextView()
+				bindSlotTextViewData()
 				if (slot.isSubscribed) {
 					setSubscribeButtonView(SubscribeButtonState.UNSUBSCRIBE)
 				} else {
@@ -132,27 +131,15 @@ class SubscribeDialog : BottomSheetDialogFragment() {
 		return view
 	}
 
-	private fun setSlotTextView() {
-		val dayOfWeek = SimpleDateFormat("EEE", Locale.getDefault()).format(slot.begin)
-		val day = SimpleDateFormat("dd", Locale.getDefault()).format(slot.begin)
-		val month = SimpleDateFormat("MM", Locale.getDefault()).format(slot.begin)
-		val year = SimpleDateFormat("yyyy", Locale.getDefault()).format(slot.begin)
-		val hourStartTime = SimpleDateFormat("HH", Locale.getDefault()).format(slot.begin)
-		val hourStartNoon = SimpleDateFormat("a", Locale.getDefault()).format(slot.begin)
-		val hourEndTime = SimpleDateFormat("HH", Locale.getDefault()).format(slot.end)
-		val hourEndNoon = SimpleDateFormat("a", Locale.getDefault()).format(slot.end)
+	private fun bindSlotTextViewData() {
+		val date: String = SimpleDateFormat("EEE dd-MM-yyyy", Locale.getDefault()).format(slot.begin)
+		val timeBegin: String = SimpleDateFormat("HHa", Locale.getDefault()).format(slot.begin)
+		val timeEnd: String = SimpleDateFormat("HHa", Locale.getDefault()).format(slot.end)
 
-		dateTextView.text = getString(R.string.date_text_view, dayOfWeek, day, month, year)
-		timeTextView.text = getString(
-			R.string.time_text_view,
-			hourStartTime,
-			hourStartNoon,
-			hourEndTime,
-			hourEndNoon
-		)
-		clusterTextView.text = getString(R.string.cluster_text_view, slot.cluster)
-		reservedPlacesTextView.text =
-			getString(R.string.reserved_places_text_view, slot.reservedPlaces)
+		dateTextView.text = getString(R.string.list_item_date, date)
+		timeTextView.text = getString(R.string.list_item_time, timeBegin, timeEnd)
+		clusterTextView.text = getString(R.string.list_item_cluster, slot.cluster)
+		reservedPlacesTextView.text = getString(R.string.list_item_reserved, slot.reservedPlaces)
 	}
 
 	private fun setInBotListButton(state: InBotListButtonState) {

@@ -53,4 +53,18 @@ object CustomToast {
 		successToast.show()
 	}
 
+	fun showSuccess(context: Context, successMessage: String) {
+		val successToast = Toast(context)
+		val layoutInflater = LayoutInflater.from(context)
+
+		val customToastView = layoutInflater.inflate(R.layout.custom_toast, null) as TextView
+		customToastView.background = context.resources.getDrawable(R.drawable.custum_toast_success, context.theme)
+		customToastView.text = successMessage
+		successToast.view = customToastView
+
+		successToast.setGravity(Gravity.TOP, X_OFFEST, Y_OFFEST)
+
+		successToast.show()
+	}
+
 }

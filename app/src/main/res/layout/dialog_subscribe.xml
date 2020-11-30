@@ -7,38 +7,7 @@
     android:orientation="vertical"
     tools:context=".ui.SubscribeDialog">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:background="@drawable/custom_border"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/date_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="test" />
-
-        <TextView
-            android:id="@+id/time_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="test" />
-
-        <TextView
-            android:id="@+id/cluster_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="test" />
-
-        <TextView
-            android:id="@+id/reserved_places_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="test" />
-
-    </LinearLayout>
+    <include layout="@layout/list_item_slot" />
 
     <Button
         style="?android:attr/buttonBarButtonStyle"
@@ -48,6 +17,7 @@
         android:text="@string/subscribe_dialog_button_add_bot_list" />
 
     <LinearLayout
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -67,6 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:text="Subscribe" />
+
     </LinearLayout>
 
 </LinearLayout>

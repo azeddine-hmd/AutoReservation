@@ -8,11 +8,13 @@
     <string name="options_menu_reset">Reset</string>
     <string name="bottom_nav_menu_reservation">Reservation</string>
     <string name="bottom_nav_menu_bot">Bot</string>
+
+    <!--> list item for slot <-->
     <string name="list_item_date">Date: %s</string>
-    <string name="date_text_view">Date: %1$s %2$s-%3$s-%4$s</string>
-    <string name="time_text_view"><![CDATA[Time: %1$s%2$s —> %3$s%4$s]]></string>
-    <string name="cluster_text_view">Cluster: %d</string>
-    <string name="reserved_places_text_view">Reserved Places: %d/50</string>
+    <string name="list_item_time"><![CDATA[Time: %1$s —> %2$s]]></string>
+    <string name="list_item_cluster">Cluster: %d</string>
+    <string name="list_item_reserved">Reserved Places: %d/75</string>
+
     <string name="unsubscribe_button_dialog">Unsubscribe</string>
     <string name="subscribe_button_dialog">Subscribe</string>
     <string name="options_menu_dark_mode">Dark Mode</string>
