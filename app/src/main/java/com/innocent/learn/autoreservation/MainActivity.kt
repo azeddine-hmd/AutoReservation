@@ -16,6 +16,7 @@ import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.innocent.learn.autoreservation.repositories.ReservationRepository
 import com.innocent.learn.autoreservation.utils.CookiePreference
 
 class MainActivity : AppCompatActivity() {
@@ -68,12 +69,17 @@ class MainActivity : AppCompatActivity() {
 	override fun onOptionsItemSelected(item: MenuItem): Boolean {
 		return when (item.itemId) {
 			R.id.options_menu_reset -> {
-				CookiePreference.setReservationId(this, "")
-				navController.navigate(R.id.login_fragment)
+				resetClicked()
 				return true
 			}
 			else -> item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
 		}
+	}
+
+	private fun resetClicked() {
+		CookiePreference.setReservationId(this, "")
+		ReservationRepository.get().deleteAllSlot() // refactor it later
+		navController.navigate(R.id.login_fragment)
 	}
 
 }
