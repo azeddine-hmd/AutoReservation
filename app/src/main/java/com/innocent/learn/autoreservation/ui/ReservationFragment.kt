@@ -1,6 +1,7 @@
 package com.innocent.learn.autoreservation.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,14 +51,17 @@ class ReservationFragment : Fragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		swipeRefresh.setOnRefreshListener {
-			viewModel.fetchSlotList.observe(viewLifecycleOwner) { newSlotList ->
-				if (newSlotList.isNotEmpty()) {
-					val updatedSlotList = viewModel.updateSlotList(viewModel.slotList, newSlotList)
-					// update slot list in database
-					viewModel.addSlotList(updatedSlotList)
+			Log.d(TAG, "setOnRefresh called")
+			if (swipeRefresh.isRefreshing) {
+				viewModel.fetchSlotList.observe(viewLifecycleOwner) { newSlotList ->
+					if (newSlotList.isNotEmpty()) {
+						val updatedSlotList = viewModel.updateSlotList(viewModel.slotList, newSlotList)
+						// update slot list in database
+						viewModel.addSlotList(updatedSlotList)
+					}
+					// stop swipe refresh icon animation after receiving slot list
+					swipeRefresh.isRefreshing = false
 				}
-				// stop swipe refresh icon animation after receiving slot list
-				swipeRefresh.isRefreshing = false
 			}
 		}
 	}

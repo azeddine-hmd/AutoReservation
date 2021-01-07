@@ -35,6 +35,7 @@ class SlotListAdapter(private val context: Context, slotDiffCallback: SlotDiffCa
 
 	class SlotViewHolder(private val context: Context, item: View)
 		: RecyclerView.ViewHolder(item), View.OnClickListener {
+
 		private val dateTextView: TextView = item.findViewById(R.id.date_text_view)
 		private val timeTextView: TextView = item.findViewById(R.id.time_text_view)
 		private val clusterTextView: TextView = item.findViewById(R.id.cluster_text_view)
@@ -73,7 +74,6 @@ class SlotListAdapter(private val context: Context, slotDiffCallback: SlotDiffCa
 		}
 
 	}
-
 
 	class SlotDiffCallback : DiffUtil.ItemCallback<Slot>() {
 

@@ -41,8 +41,7 @@ dependencies {
     def lifecycle_version = "2.2.0"
     def retrofit_version = "2.9.0"
     def preference_version = "1.1.1"
-    def room_version = "2.2.5"
-    def nav_version = "2.3.1"
+    def room_version = "2.2.6"
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -50,6 +49,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$appcompt_version"
 
     // Navigation Component
+    def nav_version = "2.3.2"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
@@ -72,7 +72,7 @@ dependencies {
     // layouts
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 

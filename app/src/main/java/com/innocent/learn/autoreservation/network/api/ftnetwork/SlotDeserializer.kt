@@ -5,7 +5,6 @@ import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.innocent.learn.autoreservation.model.Slot
-import com.innocent.learn.autoreservation.utils.CustomToast
 import org.json.JSONObject
 import java.lang.reflect.Type
 import java.text.SimpleDateFormat
@@ -23,10 +22,10 @@ class SlotDeserializer : JsonDeserializer<Slot> {
 		context: JsonDeserializationContext?
 	): Slot {
 
-		json?.let { bodyElemnt ->
-			Log.d(TAG, "bodyElement=${bodyElemnt}")
+		json?.let { bodyElement ->
+			Log.d(TAG, "bodyElement=${bodyElement}")
 
-			val root = bodyElemnt.asJsonObject
+			val root = bodyElement.asJsonObject
 			val event = root.get("Event").asJsonObject
 
 			val id = event.get("event_id").asInt
@@ -69,15 +68,17 @@ class SlotDeserializer : JsonDeserializer<Slot> {
 
 			return Slot(id, begin, end, cluster, reservedPlaces, isSubscribed, false)
 		}
-		return Slot(0, Date(), Date(), 0, 0, false, false)
+		return uninitializedSlotModule()
+	}
+
+	private fun uninitializedSlotModule(): Slot {
+		return Slot(0, Date(), Date(), 0, 0, isSubscribed = false, isInBotList = false)
 	}
 
 	companion object {
 
 		fun deserializeJsonError(errorBody: String?): String {
-			errorBody?.let { errorJson ->
-				return JSONObject(errorJson).get("message").toString()
-			}
+			errorBody?.let { return JSONObject(it).get("message").toString() }
 			return ""
 		}
 
