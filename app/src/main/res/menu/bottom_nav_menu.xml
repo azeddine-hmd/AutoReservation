@@ -6,8 +6,4 @@
         android:icon="@drawable/booking"
         android:title="@string/bottom_nav_menu_reservation" />
 
-    <item
-        android:id="@+id/bot_fragment"
-        android:icon="@drawable/robot"
-        android:title="@string/bottom_nav_menu_bot" />
 </menu>

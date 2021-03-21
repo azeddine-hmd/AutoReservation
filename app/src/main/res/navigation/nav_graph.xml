@@ -27,16 +27,6 @@
             app:destination="@id/subscribe_dialog" />
     </fragment>
 
-    <fragment
-        android:id="@+id/bot_fragment"
-        android:name="com.innocent.learn.autoreservation.ui.BotFragment"
-        android:label="Bot"
-        tools:layout="@layout/fragment_bot" >
-        <action
-            android:id="@+id/action_bot_fragment_to_subscribe_dialog"
-            app:destination="@id/subscribe_dialog" />
-    </fragment>
-
     <dialog
         android:id="@+id/subscribe_dialog"
         android:name="com.innocent.learn.autoreservation.ui.SubscribeDialog"

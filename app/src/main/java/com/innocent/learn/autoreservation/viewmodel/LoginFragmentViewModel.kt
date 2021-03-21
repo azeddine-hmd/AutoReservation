@@ -7,7 +7,7 @@ import com.innocent.learn.autoreservation.model.Slot
 import com.innocent.learn.autoreservation.repositories.ReservationRepository
 import com.innocent.learn.autoreservation.utils.CookieHelper
 
-private const val RESERVATION_ID_MAX_LENGTH = 428
+private const val RESERVATION_ID_MIN_LENGTH = 400
 
 class LoginFragmentViewModel(private val app: Application) : AndroidViewModel(app) {
 	private val _reservationRepository = ReservationRepository.get()
@@ -22,9 +22,9 @@ class LoginFragmentViewModel(private val app: Application) : AndroidViewModel(ap
 
 	fun isValidReservationId(reservationId: String): Boolean {
 		val reservationIdTrimmed = reservationId.trim()
-		if (reservationIdTrimmed.length == RESERVATION_ID_MAX_LENGTH
-			&& reservationIdTrimmed.isNotEmpty()
-			&& reservationIdTrimmed.last() == '='
+		if (reservationIdTrimmed.length >= RESERVATION_ID_MIN_LENGTH &&
+			reservationIdTrimmed.isNotEmpty() &&
+			reservationIdTrimmed.last() == '='
 		) {
 			return true
 		}

@@ -38,7 +38,6 @@ class MainActivity : AppCompatActivity() {
 			setOf(
 				R.id.login_fragment,
 				R.id.reservation_fragment,
-				R.id.bot_fragment,
 			)
 		)
 		setupActionBarWithNavController(this, navController, appBarConfiguration)
@@ -54,7 +53,8 @@ class MainActivity : AppCompatActivity() {
 					toolbar.visibility = View.GONE
 				}
 				else -> {
-					bottomNavigation.visibility = View.VISIBLE
+					// uncomment line below to enable bottom navigation
+					//bottomNavigation.visibility = View.VISIBLE
 					toolbar.visibility = View.VISIBLE
 				}
 			}
@@ -78,7 +78,8 @@ class MainActivity : AppCompatActivity() {
 
 	private fun resetClicked() {
 		CookiePreference.setReservationId(this, "")
-		ReservationRepository.get().deleteAllSlot() // refactor it later
+		//TODO: refactoring: separation of concerns
+		ReservationRepository.get().deleteAllSlot()
 		navController.navigate(R.id.login_fragment)
 	}
 

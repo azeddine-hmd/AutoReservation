@@ -20,7 +20,7 @@ private const val TAG = "ReservationFragment"
 
 class ReservationFragment : Fragment() {
 	private lateinit var viewModel: ReservationFragmentViewModel
-	private lateinit var slotListAdapter: ListAdapter<Slot, SlotListAdapter.SlotViewHolder>
+//	private lateinit var adapter: ListAdapter<Slot, SlotListAdapter.SlotViewHolder>
 	private lateinit var swipeRefresh: SwipeRefreshLayout
 
 
@@ -40,11 +40,11 @@ class ReservationFragment : Fragment() {
 	): View? {
 		val view = inflater.inflate(R.layout.fragment_reservation, container, false)
 		swipeRefresh = view.findViewById(R.id.swipe_refresh)
-		slotListAdapter = SlotListAdapter(requireContext(), SlotListAdapter.SlotDiffCallback())
-		view.findViewById<RecyclerView>(R.id.recycler_view).apply {
-			layoutManager = LinearLayoutManager(requireContext())
-			adapter = slotListAdapter
-		}
+//		adapter = SlotListAdapter(requireContext(), SlotListAdapter.SlotDiffCallback())
+//		view.findViewById<RecyclerView>(R.id.recycler_view).apply {
+//			layoutManager = LinearLayoutManager(requireContext())
+//			adapter = adapter
+//		}
 		return view
 	}
 
@@ -68,7 +68,7 @@ class ReservationFragment : Fragment() {
 
 	private fun updateUI(slotList: List<Slot>) {
 		viewModel.slotList = slotList
-		slotListAdapter.submitList(viewModel.slotList)
+//		adapter.submitList(viewModel.slotList)
 	}
 
 }
