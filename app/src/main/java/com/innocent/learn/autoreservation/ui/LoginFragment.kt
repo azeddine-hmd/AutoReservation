@@ -26,6 +26,9 @@ class LoginFragment : Fragment() {
 		super.onCreate(savedInstanceState)
 		viewModel = ViewModelProvider(this).get(LoginFragmentViewModel::class.java)
 		reservationId = CookiePreference.getStoredReservationId(requireContext())
+
+		// only for debugging purposes
+		moveToReservationFragment()
 	}
 
 	override fun onCreateView(

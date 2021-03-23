@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
 				}
 				else -> {
 					// uncomment line below to enable bottom navigation
-					//bottomNavigation.visibility = View.VISIBLE
+					bottomNavigation.visibility = View.GONE
 					toolbar.visibility = View.VISIBLE
 				}
 			}
