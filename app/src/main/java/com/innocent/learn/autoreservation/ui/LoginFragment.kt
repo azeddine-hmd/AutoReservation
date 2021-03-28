@@ -25,10 +25,11 @@ class LoginFragment : Fragment() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		viewModel = ViewModelProvider(this).get(LoginFragmentViewModel::class.java)
-		reservationId = CookiePreference.getStoredReservationId(requireContext())
+		//reservationId = CookiePreference.getStoredReservationId(requireContext())
 
 		// only for debugging purposes
-		moveToReservationFragment()
+		reservationId = "MTYxNTE1ODk5M3xEdi1CQkFFQ180SUFBUkFCRUFBQV81bl9nZ0FCQm5OMGNtbHVad3dhQUJoelpYTnphVzl1WDJSaGRHRmZjMlZ6YzJsdmJsOXJaWGthS21Gd2FXbHVkSEpoYjJGMWRHZ3VVMlZ6YzJsdmJrUmhkR0hfZ3dNQkFRdFRaWE56YVc5dVJHRjBZUUhfaEFBQkJRRUdWWE5sY2tsRUFRUUFBUWhEWVcxd2RYTkpSQUVFQUFFSFNYTlRkR0ZtWmdFQ0FBRUpUbVY0ZEVOb1pXTnJBZi1HQUFFRlVtOXNaWE1CXzRvQUFBQVFfNFVGQVFFRVZHbHRaUUhfaGdBQUFDVF9pUUlCQVJWYlhYUnZiMnhwYm5SeVlXOWhkWFJvTGxKdmJHVUJfNG9BQWYtSUFBQWlfNGNEQVFFRVVtOXNaUUhfaUFBQkFnRUNTVVFCQkFBQkJFNWhiV1VCREFBQUFCel9oQmtCX1FISWxnRXFBZzhCQUFBQUR0ZlhZLUVEOUxOMUFBQUF8fxBOTfhNAiEPT6Al9baRxlNHHuVfbIk_d4fyovZluwI="
+		//moveToReservationFragment()
 	}
 
 	override fun onCreateView(

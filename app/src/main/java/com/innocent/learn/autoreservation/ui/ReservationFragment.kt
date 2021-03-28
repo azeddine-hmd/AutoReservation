@@ -7,21 +7,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.viewpager2.widget.ViewPager2
 import com.innocent.learn.autoreservation.R
 import com.innocent.learn.autoreservation.model.Slot
-import com.innocent.learn.autoreservation.ui.adapters.SlotListAdapter
+import com.innocent.learn.autoreservation.ui.adapters.SlotViewPagerAdapter
 import com.innocent.learn.autoreservation.viewmodel.ReservationFragmentViewModel
 
 private const val TAG = "ReservationFragment"
 
 class ReservationFragment : Fragment() {
 	private lateinit var viewModel: ReservationFragmentViewModel
-//	private lateinit var adapter: ListAdapter<Slot, SlotListAdapter.SlotViewHolder>
+	private lateinit var adapter: ListAdapter<Slot, SlotViewPagerAdapter.SlotCardViewHolder>
 	private lateinit var swipeRefresh: SwipeRefreshLayout
+	private lateinit var viewPager: ViewPager2
 
 
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,11 +40,9 @@ class ReservationFragment : Fragment() {
 	): View? {
 		val view = inflater.inflate(R.layout.fragment_reservation, container, false)
 		swipeRefresh = view.findViewById(R.id.swipe_refresh)
-//		adapter = SlotListAdapter(requireContext(), SlotListAdapter.SlotDiffCallback())
-//		view.findViewById<RecyclerView>(R.id.recycler_view).apply {
-//			layoutManager = LinearLayoutManager(requireContext())
-//			adapter = adapter
-//		}
+		adapter = SlotViewPagerAdapter(SlotViewPagerAdapter.SlotDiffCallback())
+		viewPager = view.findViewById(R.id.slots_pager)
+		viewPager.adapter = adapter
 		return view
 	}
 
@@ -68,7 +66,7 @@ class ReservationFragment : Fragment() {
 
 	private fun updateUI(slotList: List<Slot>) {
 		viewModel.slotList = slotList
-//		adapter.submitList(viewModel.slotList)
+		adapter.submitList(viewModel.slotList)
 	}
 
 }

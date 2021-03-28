@@ -17,8 +17,8 @@ import java.util.Locale
 
 private const val TAG = "SlotListAdapter"
 
-class SlotListAdapter(private val context: Context, slotDiffCallback: SlotDiffCallback)
-	: ListAdapter<Slot, SlotListAdapter.SlotViewHolder>(slotDiffCallback) {
+class SlotListAdapter(private val context: Context, slotDiffCallback: SlotDiffCallback) :
+	ListAdapter<Slot, SlotListAdapter.SlotViewHolder>(slotDiffCallback) {
 
 	override fun onCreateViewHolder(
 		parent: ViewGroup,
@@ -33,9 +33,8 @@ class SlotListAdapter(private val context: Context, slotDiffCallback: SlotDiffCa
 		holder.bind(getItem(position))
 	}
 
-	class SlotViewHolder(private val context: Context, item: View)
-		: RecyclerView.ViewHolder(item), View.OnClickListener {
-
+	class SlotViewHolder(private val context: Context, item: View) : RecyclerView.ViewHolder(item),
+		View.OnClickListener {
 		private val dateTextView: TextView = item.findViewById(R.id.date_text_view)
 		private val timeTextView: TextView = item.findViewById(R.id.time_text_view)
 		private val clusterTextView: TextView = item.findViewById(R.id.cluster_text_view)

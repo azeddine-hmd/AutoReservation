@@ -27,4 +27,6 @@
     <string name="unsubscribe_toast">unsubscribed successfully</string>
     <string name="cluster_one_text_view">CLUSTER 1</string>
     <string name="cluster_two_text_view">CLUSTER 2</string>
+    <string name="reserved_places">60/75</string>
+    <string name="slot_hours">6 Hours</string>
 </resources>
