@@ -68,7 +68,7 @@ class SlotListAdapter(private val context: Context, slotDiffCallback: SlotDiffCa
 
 		private fun showSubscriptionDialog() {
 			val action =
-				ReservationFragmentDirections.actionReservationFragmentToSubscribeDialog(slot.id)
+				ReservationFragmentDirections.actionReservationFragmentToSubscribeDialog(slot.id, position)
 			itemView.findNavController().navigate(action)
 		}
 

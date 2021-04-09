@@ -66,13 +66,13 @@ class SlotDeserializer : JsonDeserializer<Slot> {
 
 			val isSubscribed = root.get("is_subscribed").asBoolean
 
-			return Slot(id, begin, end, cluster, reservedPlaces, isSubscribed, false)
+			return Slot(id, begin, end, cluster, reservedPlaces, isSubscribed)
 		}
 		return uninitializedSlotModule()
 	}
 
 	private fun uninitializedSlotModule(): Slot {
-		return Slot(0, Date(), Date(), 0, 0, isSubscribed = false, isInBotList = false)
+		return Slot(0, Date(), Date(), 0, 0, isSubscribed = false)
 	}
 
 	companion object {

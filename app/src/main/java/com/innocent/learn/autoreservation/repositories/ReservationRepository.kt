@@ -1,6 +1,7 @@
 package com.innocent.learn.autoreservation.repositories
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.room.Room
 import com.innocent.learn.autoreservation.database.ReservationDao
@@ -10,6 +11,7 @@ import com.innocent.learn.autoreservation.network.ReservationRemote
 import java.util.concurrent.Executors
 
 private const val DATABASE_NAME = "slot-database"
+private const val TAG = "ReservationRepository"
 
 class ReservationRepository private constructor(context: Context) {
 	private val reservationRemote = ReservationRemote(context)
@@ -32,9 +34,10 @@ class ReservationRepository private constructor(context: Context) {
 
 	// database
 
-	fun getSlotList(): LiveData<List<Slot>> = reservationDao.getSlotList()
-
-	fun getBotList(): LiveData<List<Slot>> = reservationDao.getBotList()
+	fun getSlotList(): LiveData<List<Slot>> {
+		Log.d(TAG, "action triggered: get slot list from SQLite")
+		return reservationDao.getSlotList()
+	}
 
 	fun getSlot(id: Int): LiveData<Slot?> = reservationDao.getSlot(id)
 
@@ -50,6 +53,7 @@ class ReservationRepository private constructor(context: Context) {
 
 	fun updateSlot(slot: Slot) {
 		executor.execute {
+			Log.d(TAG, "action triggered: updating slot to SQLite")
 			reservationDao.updateSlot(slot)
 		}
 	}

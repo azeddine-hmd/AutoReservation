@@ -52,8 +52,8 @@
             app:srcCompat="@drawable/ic_time" />
 
         <TextView
-            style="@style/text_card_view"
             android:id="@+id/total_hours"
+            style="@style/text_card_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -68,7 +68,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.5" />
+            app:layout_constraintGuide_percent="0.4" />
+
+        <ImageView
+            android:id="@+id/indicator"
+            android:layout_width="0dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="32dp"
+            android:contentDescription="@null"
+            app:layout_constraintEnd_toEndOf="@+id/total_hours"
+            app:layout_constraintStart_toStartOf="@+id/time"
+            app:layout_constraintTop_toBottomOf="@+id/time"
+            app:srcCompat="@drawable/bg_available_slot" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -35,6 +35,9 @@
         <argument
             android:name="slotId"
             app:argType="integer" />
+        <argument
+            android:name="position"
+            app:argType="integer" />
     </dialog>
 
 </navigation>
