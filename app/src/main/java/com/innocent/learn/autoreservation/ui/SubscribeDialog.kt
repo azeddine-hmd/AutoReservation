@@ -2,6 +2,7 @@ package com.innocent.learn.autoreservation.ui
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,19 +38,13 @@ class SubscribeDialog : BottomSheetDialogFragment() {
 		reservationViewModel =
 			ViewModelProvider(requireActivity()).get(ReservationFragmentViewModel::class.java)
 
-		viewModel.getSlot(args.slotId)
-		viewModel.slotLiveData.observe(this) { slot ->
-			if (slot != null) {
-				this.slot = slot
-				if (slot.isSubscribed) {
-					setSubscribeButtonView(SubscribeButtonState.UNSUBSCRIBE)
-				} else {
-					setSubscribeButtonView(SubscribeButtonState.SUBSCRIBE)
-				}
-			}
+		val foundSlot = reservationViewModel.slotList.find { args.slotId == it.id }
+		if (foundSlot != null) {
+			this.slot = foundSlot
+		} else {
+			Log.d(TAG, "onCreate: slot not found in list'")
 		}
 	}
-
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
@@ -66,37 +61,43 @@ class SubscribeDialog : BottomSheetDialogFragment() {
 
 		subscribeButton.setOnClickListener {
 			if (slot.isSubscribed) {
-				val unsubscribeLiveData = viewModel.unsubscribe(slot.id)
-				unsubscribeLiveData.observe(viewLifecycleOwner) { newSlot ->
+				viewModel.unsubscribe(slot.id).observe(viewLifecycleOwner) { newSlot ->
 					CustomToast.showSuccess(requireContext(), R.string.unsubscribe_toast)
 					setSubscribeButtonView(SubscribeButtonState.SUBSCRIBE)
-
-					val slotIndex = reservationViewModel.slotList.indexOf(slot)
-					if (slotIndex != -1) {
-						reservationViewModel.slotList[slotIndex] = newSlot
-						reservationViewModel.updateViewPager(args.position)
-					}
-					dismiss()
+					updateSlot(newSlot)
 				}
 			} else {
-				val subscribeLiveData = viewModel.subscribe(slot.id)
-				subscribeLiveData.observe(viewLifecycleOwner) { newSlot ->
+				viewModel.subscribe(slot.id).observe(viewLifecycleOwner) { newSlot ->
 					CustomToast.showSuccess(requireContext(), R.string.subscribe_toast)
 					setSubscribeButtonView(SubscribeButtonState.UNSUBSCRIBE)
-
-					val slotIndex = reservationViewModel.slotList.indexOf(slot)
-					if (slotIndex != -1) {
-						reservationViewModel.slotList[slotIndex] = newSlot
-						reservationViewModel.updateViewPager(args.position)
-					}
-					dismiss()
+					updateSlot(newSlot)
 				}
 			}
 		}
 
-
+		updateSlotView(slot)
 
 		return view
+	}
+
+	private fun updateSlotView(slot: Slot) {
+		if (slot.isSubscribed) {
+			setSubscribeButtonView(SubscribeButtonState.UNSUBSCRIBE)
+		} else {
+			setSubscribeButtonView(SubscribeButtonState.SUBSCRIBE)
+		}
+	}
+
+
+	private fun updateSlot(newSlot: Slot) {
+		val slotIndex = reservationViewModel.slotList.indexOf(slot)
+		if (slotIndex != -1) {
+			reservationViewModel.slotList[slotIndex] = newSlot
+			reservationViewModel.updateViewPager(args.position)
+			slot = newSlot
+		} else {
+			Log.d(TAG, "slot could not be found")
+		}
 	}
 
 	private fun setSubscribeButtonView(state: SubscribeButtonState) {

@@ -26,6 +26,10 @@ class ReservationFragment : Fragment() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		viewModel = ViewModelProvider(requireActivity()).get(ReservationFragmentViewModel::class.java)
+		viewModel.getSlotList.observe(this) { newSlotList ->
+			viewModel.slotList = newSlotList.toMutableList()
+			updateUI()
+		}
 	}
 
 	override fun onCreateView(
@@ -35,7 +39,9 @@ class ReservationFragment : Fragment() {
 	): View? {
 		val view = inflater.inflate(R.layout.fragment_reservation, container, false)
 		swipeRefresh = view.findViewById(R.id.swipe_refresh)
+
 		adapter = SlotViewPagerAdapter(SlotViewPagerAdapter.SlotDiffCallback())
+
 		viewPager = view.findViewById(R.id.slots_pager)
 		viewPager.adapter = adapter
 		viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -44,18 +50,20 @@ class ReservationFragment : Fragment() {
 				super.onPageSelected(position)
 			}
 		})
+
 		return view
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		swipeRefresh.setOnRefreshListener {
+			viewModel.position = viewPager.currentItem
 			if (swipeRefresh.isRefreshing) {
 				viewModel.fetchSlotList.observe(viewLifecycleOwner) { newSlotList ->
 					if (newSlotList.isNotEmpty()) {
 						Log.d(TAG, "received new slot list from net: $newSlotList")
 						viewModel.slotList = newSlotList.toMutableList()
-//						viewModel.addSlotList(newSlotList)
+						viewModel.addSlotList(newSlotList)
 						updateUI()
 					}
 					// stop swipe refresh icon animation after receiving slot list
@@ -73,8 +81,9 @@ class ReservationFragment : Fragment() {
 	private fun updateUI() {
 		val pageSlotList = viewModel.convertSlotList(viewModel.slotList)
 		adapter.submitList(pageSlotList) {
-			viewPager.setCurrentItem(viewModel.position, false)
-			Log.d(TAG, "UI updated successfully")
+			viewPager.post {
+				viewPager.currentItem = viewModel.position
+			}
 		}
 	}
 

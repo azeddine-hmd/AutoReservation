@@ -94,9 +94,6 @@ class SlotViewPagerAdapter(slotDiffCallback: SlotDiffCallback) :
 		}
 
 		private fun setIndicatorDrawable(slot: Slot, indicatorImageView: ImageView) {
-			Log.d(TAG, "setIndicatorDrawable: ${indicatorImageView.hashCode()}")
-			Log.d(TAG, "setIndicatorDrawable: ${slot}")
-			Log.d(TAG, "setIndicatorDrawable:------------------------")
 			val drawable: Drawable?
 			drawable = if (slot.begin.before(Date())) {
 				ContextCompat.getDrawable(itemView.context, R.drawable.bg_outaded_slot)
