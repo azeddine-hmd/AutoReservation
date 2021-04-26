@@ -5,14 +5,15 @@ import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ListAdapter
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.innocent.learn.autoreservation.R
 import com.innocent.learn.autoreservation.model.PageSlot
 import com.innocent.learn.autoreservation.ui.adapters.SlotViewPagerAdapter
 import com.innocent.learn.autoreservation.viewmodel.ReservationFragmentViewModel
+import kotlinx.android.synthetic.main.activity_main.toolbar
 
 private const val TAG = "ReservationFragment"
 
@@ -46,8 +47,10 @@ class ReservationFragment : Fragment() {
 		viewPager.adapter = adapter
 		viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
 			override fun onPageSelected(position: Int) {
-				Log.d(TAG, "onPageSelected: $position")
 				super.onPageSelected(position)
+				Log.d(TAG, "onPageSelected: $position")
+				viewModel.position = position
+				changeTitle()
 			}
 		})
 
@@ -56,6 +59,13 @@ class ReservationFragment : Fragment() {
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
+
+		findNavController().addOnDestinationChangedListener { _ , destination, _ ->
+			if (destination.id == R.id.reservation_fragment) {
+				changeTitle()
+			}
+		}
+
 		swipeRefresh.setOnRefreshListener {
 			viewModel.position = viewPager.currentItem
 			if (swipeRefresh.isRefreshing) {
@@ -71,11 +81,18 @@ class ReservationFragment : Fragment() {
 				}
 			}
 		}
+
 		viewModel.updateViewPager.observe(viewLifecycleOwner, { position ->
 			Log.d(TAG, "position to update $position")
 			viewModel.position = position
 			updateUI()
 		})
+
+
+	}
+
+	private fun changeTitle() {
+		requireActivity().toolbar.title = "Page: ${viewModel.position}"
 	}
 
 	private fun updateUI() {

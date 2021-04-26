@@ -16,13 +16,16 @@ private const val TAG = "ReservationViewModel"
 class ReservationFragmentViewModel(private val app: Application) : AndroidViewModel(app) {
 
 	private val _reservationRepository = ReservationRepository.get()
+
 	val getSlotList: LiveData<List<Slot>> = _reservationRepository.getSlotList()
 	val fetchSlotList: LiveData<List<Slot>>
 		get() = _reservationRepository.fetchSlotList(CookieHelper.getReservationCookie(app))
-	var slotList: MutableList<Slot> = mutableListOf()
+
 	private val _updateViewPager = MutableLiveData<Int>()
 	val updateViewPager: LiveData<Int>
 		get() = _updateViewPager
+
+	var slotList: MutableList<Slot> = mutableListOf()
 	var position = 0
 
 	fun addSlotList(slotList: List<Slot>) {

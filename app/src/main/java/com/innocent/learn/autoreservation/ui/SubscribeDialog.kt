@@ -113,4 +113,10 @@ class SubscribeDialog : BottomSheetDialogFragment() {
 		}
 	}
 
+	override fun onDestroy() {
+		super.onDestroy()
+		Log.d(TAG, "onDestroy: executing...")
+
+	}
+
 }
