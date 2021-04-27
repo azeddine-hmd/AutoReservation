@@ -10,7 +10,6 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.innocent.learn.autoreservation.R
 import com.innocent.learn.autoreservation.model.PageSlot
@@ -20,8 +19,8 @@ import java.util.Date
 
 private const val TAG = "SlotViewPagerAdapter"
 
-class SlotViewPagerAdapter(slotDiffCallback: SlotDiffCallback) :
-	ListAdapter<PageSlot, SlotViewPagerAdapter.SlotCardViewHolder>(slotDiffCallback) {
+class SlotViewPagerAdapter() : RecyclerView.Adapter<SlotViewPagerAdapter.SlotCardViewHolder>() {
+	var pageSlotList: List<PageSlot> = emptyList()
 
 	override fun onCreateViewHolder(
 		parent: ViewGroup,
@@ -33,10 +32,15 @@ class SlotViewPagerAdapter(slotDiffCallback: SlotDiffCallback) :
 	}
 
 	override fun onBindViewHolder(holder: SlotCardViewHolder, position: Int) {
-		holder.bind(getItem(position))
+		holder.bind(pageSlotList[position])
 	}
 
-	override fun getItemCount(): Int = currentList.size
+	override fun getItemCount(): Int = pageSlotList.size
+
+	fun submitList(pageSlotList: List<PageSlot>) {
+		this.pageSlotList = pageSlotList
+		notifyDataSetChanged()
+	}
 
 	class SlotCardViewHolder(item: View) :
 		RecyclerView.ViewHolder(item) {
@@ -73,16 +77,37 @@ class SlotViewPagerAdapter(slotDiffCallback: SlotDiffCallback) :
 
 		private fun setIndicators() {
 			setIndicatorDrawable(pageSlot.topLeft, morningLeftCardView.findViewById(R.id.indicator))
-			setIndicatorDrawable(pageSlot.topRight, morningRightCardView.findViewById(R.id.indicator))
-			setIndicatorDrawable(pageSlot.bottomLeft, afternoonLeftCardView.findViewById(R.id.indicator))
-			setIndicatorDrawable(pageSlot.bottomRight, afternoonRightCardView.findViewById(R.id.indicator))
+			setIndicatorDrawable(
+				pageSlot.topRight,
+				morningRightCardView.findViewById(R.id.indicator)
+			)
+			setIndicatorDrawable(
+				pageSlot.bottomLeft,
+				afternoonLeftCardView.findViewById(R.id.indicator)
+			)
+			setIndicatorDrawable(
+				pageSlot.bottomRight,
+				afternoonRightCardView.findViewById(R.id.indicator)
+			)
 		}
 
 		private fun setReservedTexts() {
-			setReservedSlots(pageSlot.topLeft, morningLeftCardView.findViewById(R.id.reserved_slots))
-			setReservedSlots(pageSlot.topRight, morningRightCardView.findViewById(R.id.reserved_slots))
-			setReservedSlots(pageSlot.bottomLeft, afternoonLeftCardView.findViewById(R.id.reserved_slots))
-			setReservedSlots(pageSlot.bottomRight, afternoonRightCardView.findViewById(R.id.reserved_slots))
+			setReservedSlots(
+				pageSlot.topLeft,
+				morningLeftCardView.findViewById(R.id.reserved_slots)
+			)
+			setReservedSlots(
+				pageSlot.topRight,
+				morningRightCardView.findViewById(R.id.reserved_slots)
+			)
+			setReservedSlots(
+				pageSlot.bottomLeft,
+				afternoonLeftCardView.findViewById(R.id.reserved_slots)
+			)
+			setReservedSlots(
+				pageSlot.bottomRight,
+				afternoonRightCardView.findViewById(R.id.reserved_slots)
+			)
 		}
 
 
@@ -107,7 +132,10 @@ class SlotViewPagerAdapter(slotDiffCallback: SlotDiffCallback) :
 
 		private fun showSubscriptionDialog(slot: Slot) {
 			val action =
-				ReservationFragmentDirections.actionReservationFragmentToSubscribeDialog(slot.id, adapterPosition)
+				ReservationFragmentDirections.actionReservationFragmentToSubscribeDialog(
+					slot.id,
+					adapterPosition
+				)
 			itemView.findNavController().navigate(action)
 		}
 

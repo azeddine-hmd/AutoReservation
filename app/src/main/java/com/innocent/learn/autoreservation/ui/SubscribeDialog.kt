@@ -13,8 +13,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.innocent.learn.autoreservation.R
 import com.innocent.learn.autoreservation.model.Slot
 import com.innocent.learn.autoreservation.utils.CustomToast
-import com.innocent.learn.autoreservation.viewmodel.ReservationFragmentViewModel
-import com.innocent.learn.autoreservation.viewmodel.SubscribeDialogViewModel
+import com.innocent.learn.autoreservation.viewmodel.ReservationViewModel
+import com.innocent.learn.autoreservation.viewmodel.SubscribeViewModel
 
 private const val TAG = "SubscribeDialog"
 private const val INITIAL_COLOR = -16743049
@@ -24,8 +24,8 @@ enum class SubscribeButtonState {
 }
 
 class SubscribeDialog : BottomSheetDialogFragment() {
-	private lateinit var viewModel: SubscribeDialogViewModel
-	private lateinit var reservationViewModel: ReservationFragmentViewModel
+	private lateinit var viewModel: SubscribeViewModel
+	private lateinit var reservationViewModel: ReservationViewModel
 	private val args: SubscribeDialogArgs by navArgs()
 	private lateinit var subscribeButton: Button
 	private lateinit var cancelButton: Button
@@ -34,9 +34,9 @@ class SubscribeDialog : BottomSheetDialogFragment() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 
-		viewModel = ViewModelProvider(requireActivity()).get(SubscribeDialogViewModel::class.java)
+		viewModel = ViewModelProvider(requireActivity()).get(SubscribeViewModel::class.java)
 		reservationViewModel =
-			ViewModelProvider(requireActivity()).get(ReservationFragmentViewModel::class.java)
+			ViewModelProvider(requireActivity()).get(ReservationViewModel::class.java)
 
 		val foundSlot = reservationViewModel.slotList.find { args.slotId == it.id }
 		if (foundSlot != null) {

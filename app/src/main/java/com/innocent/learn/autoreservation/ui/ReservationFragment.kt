@@ -6,31 +6,26 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewpager2.widget.ViewPager2
 import com.innocent.learn.autoreservation.R
-import com.innocent.learn.autoreservation.model.PageSlot
 import com.innocent.learn.autoreservation.ui.adapters.SlotViewPagerAdapter
-import com.innocent.learn.autoreservation.viewmodel.ReservationFragmentViewModel
+import com.innocent.learn.autoreservation.viewmodel.ReservationViewModel
 import kotlinx.android.synthetic.main.activity_main.toolbar
 
 private const val TAG = "ReservationFragment"
 
 class ReservationFragment : Fragment() {
-	private lateinit var viewModel: ReservationFragmentViewModel
-	private lateinit var adapter: ListAdapter<PageSlot, SlotViewPagerAdapter.SlotCardViewHolder>
+	private lateinit var viewModel: ReservationViewModel
+	private lateinit var adapter: SlotViewPagerAdapter
 	private lateinit var swipeRefresh: SwipeRefreshLayout
 	private lateinit var viewPager: ViewPager2
 
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		viewModel = ViewModelProvider(requireActivity()).get(ReservationFragmentViewModel::class.java)
-		viewModel.getSlotList.observe(this) { newSlotList ->
-			viewModel.slotList = newSlotList.toMutableList()
-			updateUI()
-		}
+		viewModel = ViewModelProvider(requireActivity()).get(ReservationViewModel::class.java)
 	}
 
 	override fun onCreateView(
@@ -40,9 +35,7 @@ class ReservationFragment : Fragment() {
 	): View? {
 		val view = inflater.inflate(R.layout.fragment_reservation, container, false)
 		swipeRefresh = view.findViewById(R.id.swipe_refresh)
-
-		adapter = SlotViewPagerAdapter(SlotViewPagerAdapter.SlotDiffCallback())
-
+		adapter = SlotViewPagerAdapter()
 		viewPager = view.findViewById(R.id.slots_pager)
 		viewPager.adapter = adapter
 		viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -66,6 +59,11 @@ class ReservationFragment : Fragment() {
 			}
 		}
 
+		viewModel.getSlotList.observe(viewLifecycleOwner) { newSlotList ->
+			viewModel.slotList = newSlotList.toMutableList()
+			updateUI()
+		}
+
 		swipeRefresh.setOnRefreshListener {
 			viewModel.position = viewPager.currentItem
 			if (swipeRefresh.isRefreshing) {
@@ -87,8 +85,6 @@ class ReservationFragment : Fragment() {
 			viewModel.position = position
 			updateUI()
 		})
-
-
 	}
 
 	private fun changeTitle() {
@@ -97,11 +93,7 @@ class ReservationFragment : Fragment() {
 
 	private fun updateUI() {
 		val pageSlotList = viewModel.convertSlotList(viewModel.slotList)
-		adapter.submitList(pageSlotList) {
-			viewPager.post {
-				viewPager.currentItem = viewModel.position
-			}
-		}
+		adapter.submitList(pageSlotList)
 	}
 
 }

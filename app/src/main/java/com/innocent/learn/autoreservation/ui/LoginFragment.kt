@@ -14,17 +14,17 @@ import androidx.navigation.fragment.findNavController
 import com.innocent.learn.autoreservation.R
 import com.innocent.learn.autoreservation.utils.CookiePreference
 import com.innocent.learn.autoreservation.utils.CustomToast
-import com.innocent.learn.autoreservation.viewmodel.LoginFragmentViewModel
+import com.innocent.learn.autoreservation.viewmodel.LoginViewModel
 
 class LoginFragment : Fragment() {
-	private lateinit var viewModel: LoginFragmentViewModel
+	private lateinit var viewModel: LoginViewModel
 	private lateinit var cookieEditText: EditText
 	private lateinit var loginButton: Button
 	private lateinit var reservationId: String
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		viewModel = ViewModelProvider(requireActivity()).get(LoginFragmentViewModel::class.java)
+		viewModel = ViewModelProvider(requireActivity()).get(LoginViewModel::class.java)
 		//reservationId = CookiePreference.getStoredReservationId(requireContext())
 
 		// only for debugging purposes

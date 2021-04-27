@@ -9,7 +9,7 @@ import com.innocent.learn.autoreservation.utils.CookieHelper
 
 private const val RESERVATION_ID_MIN_LENGTH = 400
 
-class LoginFragmentViewModel(private val app: Application) : AndroidViewModel(app) {
+class LoginViewModel(private val app: Application) : AndroidViewModel(app) {
 	private val _reservationRepository = ReservationRepository.get()
 
 	fun fetchSlotList(reservationId: String): LiveData<List<Slot>> {

@@ -35,6 +35,10 @@ android {
         kotlinOptions.useIR = true
     }
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     dataBinding {
         enabled = true
     }

@@ -13,7 +13,7 @@ import java.util.Date
 
 private const val TAG = "ReservationViewModel"
 
-class ReservationFragmentViewModel(private val app: Application) : AndroidViewModel(app) {
+class ReservationViewModel(private val app: Application) : AndroidViewModel(app) {
 
 	private val _reservationRepository = ReservationRepository.get()
 

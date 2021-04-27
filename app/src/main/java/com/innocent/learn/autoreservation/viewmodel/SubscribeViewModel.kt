@@ -9,7 +9,7 @@ import com.innocent.learn.autoreservation.model.Slot
 import com.innocent.learn.autoreservation.repositories.ReservationRepository
 import com.innocent.learn.autoreservation.utils.CookieHelper
 
-class SubscribeDialogViewModel(private val app: Application) : AndroidViewModel(app) {
+class SubscribeViewModel(private val app: Application) : AndroidViewModel(app) {
 	private val _reservationRepository = ReservationRepository.get()
 	private val _slotIdLiveData = MutableLiveData<Int>()
 	val slotLiveData: LiveData<Slot?> = Transformations.switchMap(_slotIdLiveData) { slotId ->

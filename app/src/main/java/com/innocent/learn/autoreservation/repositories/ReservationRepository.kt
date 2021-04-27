@@ -15,7 +15,6 @@ private const val TAG = "ReservationRepository"
 
 class ReservationRepository private constructor(context: Context) {
 	private val reservationRemote = ReservationRemote(context)
-
 	private val reservationDatabase: ReservationDatabase = Room.databaseBuilder(
 		context.applicationContext,
 		ReservationDatabase::class.java,
