@@ -3,10 +3,15 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="error">#ff0033</color>
     <color name="green">#5cb85c</color>
     <color name="grey">#808080</color>
     <color name="blue">#0080FF</color>
+
+    <!--subscribe button-->
+    <color name="subscribe">#ff33b5e5</color>
+    <color name="unsubscribe">#ff0000</color>
 </resources>

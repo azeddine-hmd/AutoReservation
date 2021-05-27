@@ -2,6 +2,7 @@ package com.innocent.learn.autoreservation.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.innocent.learn.autoreservation.R
 import java.util.Date
 
 @Entity

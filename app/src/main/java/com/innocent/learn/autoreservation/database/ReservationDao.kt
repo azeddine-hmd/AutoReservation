@@ -1,29 +1,31 @@
 package com.innocent.learn.autoreservation.database
 
-import androidx.lifecycle.LiveData
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.Update
 import com.innocent.learn.autoreservation.model.Slot
-import com.innocent.learn.autoreservation.utils.getDistinct
 
 @Dao
 interface ReservationDao {
-
+	
 	@Query("SELECT * FROM slot")
-	fun getSlotList(): LiveData<List<Slot>>
-
+	suspend fun getSlotList(): List<Slot>
+	
 	@Query("SELECT * FROM slot WHERE id = :id")
-	fun getSlot(id: Int): LiveData<Slot?>
-
+	suspend fun getSlot(id: Int): Slot
+	
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
-	fun addSlot(slot: Slot)
-
+	suspend fun addSlot(slot: Slot)
+	
 	@Query("DELETE FROM slot")
-	fun deleteAllSlot()
-
+	suspend fun deleteAllSlot()
+	
 	@Update
-	fun updateSlot(slot: Slot)
-
+	suspend fun updateSlot(slot: Slot)
+	
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
-	fun addSlotList(slotList: List<Slot>)
-
+	suspend fun addSlotList(slotList: List<Slot>)
+	
 }

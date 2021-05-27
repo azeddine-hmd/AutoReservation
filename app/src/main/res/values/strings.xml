@@ -17,6 +17,7 @@
 
     <string name="unsubscribe_button_dialog">Unsubscribe</string>
     <string name="subscribe_button_dialog">Subscribe</string>
+    <string name="cancel_button_dialog">Cancel</string>
     <string name="options_menu_dark_mode">Dark Mode</string>
     <string name="dark_mode">Dark mode not working for now</string>
     <string name="subscribe_dialog_button_add_bot_list">ADD TO BOT LIST</string>

@@ -1,4 +1,4 @@
-package com.innocent.learn.autoreservation.network.api.ftnetwork
+package com.innocent.learn.autoreservation.network
 
 import android.util.Log
 import com.google.gson.JsonDeserializationContext

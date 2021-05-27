@@ -1,118 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tool="http://schemas.android.com/tools"
-    android:id="@+id/swipe_refresh"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_gravity="center"
-    android:layout_margin="1dp"
-    tool:context=".ui.ReservationFragment">
+    xmlns:tool="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="1dp">
+        android:layout_gravity="center"
+        android:layout_margin="1dp"
+        tool:context=".ui.reservation.ReservationFragment">
 
-        <ImageButton
-            android:id="@+id/celander"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="1dp"
-            android:layout_marginBottom="1dp"
-            android:background="@color/colorPrimary"
-            android:contentDescription="@null"
-            android:src="@drawable/ic_calendar"
-            app:layout_constraintBottom_toTopOf="@+id/horizontal_guideline"
-            app:layout_constraintEnd_toStartOf="@+id/vertical_guideline"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp">
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/vertical_guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.2" />
+            <ImageButton
+                android:id="@+id/celander"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginBottom="1dp"
+                android:background="@color/colorPrimary"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_calendar"
+                app:layout_constraintBottom_toTopOf="@+id/horizontal_guideline"
+                app:layout_constraintEnd_toStartOf="@+id/vertical_guideline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/horizontal_guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.1" />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/vertical_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.2" />
 
-        <TextView
-            android:id="@+id/cluster_one"
-            style="@style/text_header_style"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="1dp"
-            android:layout_marginEnd="1dp"
-            android:layout_marginBottom="1dp"
-            android:text="@string/cluster_one_text_view"
-            app:layout_constraintBottom_toTopOf="@+id/horizontal_guideline"
-            app:layout_constraintEnd_toStartOf="@+id/cluster_two"
-            app:layout_constraintStart_toEndOf="@+id/celander"
-            app:layout_constraintTop_toTopOf="parent" />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/horizontal_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.1" />
 
-        <TextView
-            android:id="@+id/cluster_two"
-            style="@style/text_header_style"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="1dp"
-            android:layout_marginBottom="1dp"
-            android:text="@string/cluster_two_text_view"
-            app:layout_constraintBottom_toTopOf="@+id/horizontal_guideline"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/cluster_one"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/cluster_one"
+                style="@style/text_header_style"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="1dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginBottom="1dp"
+                android:text="@string/cluster_one_text_view"
+                app:layout_constraintBottom_toTopOf="@+id/horizontal_guideline"
+                app:layout_constraintEnd_toStartOf="@+id/cluster_two"
+                app:layout_constraintStart_toEndOf="@+id/celander"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/morning"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="1dp"
-            android:layout_marginEnd="1dp"
-            android:layout_marginBottom="1dp"
-            android:background="@color/colorPrimary"
-            android:contentDescription="@null"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:scaleType="fitCenter"
-            app:layout_constraintBottom_toTopOf="@+id/afternoon"
-            app:layout_constraintEnd_toStartOf="@+id/vertical_guideline"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/celander"
-            app:srcCompat="@drawable/ic_sunny" />
+            <TextView
+                android:id="@+id/cluster_two"
+                style="@style/text_header_style"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="1dp"
+                android:layout_marginBottom="1dp"
+                android:text="@string/cluster_two_text_view"
+                app:layout_constraintBottom_toTopOf="@+id/horizontal_guideline"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/cluster_one"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/afternoon"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="1dp"
-            android:layout_marginEnd="1dp"
-            android:background="@color/colorPrimary"
-            android:contentDescription="@null"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/vertical_guideline"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/morning"
-            app:srcCompat="@drawable/ic_night" />
+            <ImageView
+                android:id="@+id/morning"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginBottom="1dp"
+                android:background="@color/colorPrimary"
+                android:contentDescription="@null"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toTopOf="@+id/afternoon"
+                app:layout_constraintEnd_toStartOf="@+id/vertical_guideline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/celander"
+                app:srcCompat="@drawable/ic_sunny" />
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/slots_pager"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/vertical_guideline"
-            app:layout_constraintTop_toTopOf="@+id/horizontal_guideline" />
+            <ImageView
+                android:id="@+id/afternoon"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginEnd="1dp"
+                android:background="@color/colorPrimary"
+                android:contentDescription="@null"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/vertical_guideline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/morning"
+                app:srcCompat="@drawable/ic_night" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/slots_pager"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/vertical_guideline"
+                app:layout_constraintTop_toTopOf="@+id/horizontal_guideline" />
 
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</layout>

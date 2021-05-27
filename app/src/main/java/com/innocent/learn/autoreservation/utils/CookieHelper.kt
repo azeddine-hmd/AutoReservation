@@ -1,20 +1,35 @@
 package com.innocent.learn.autoreservation.utils
 
 import android.content.Context
+import android.content.SharedPreferences
+import androidx.core.content.edit
+import androidx.preference.PreferenceManager
 
-class CookieHelper {
+private const val COOKIE_RESERVATION_ID= "cookieReservationId"
 
+class CookieHelper private constructor() {
 	companion object {
-
-		fun getReservationCookie(context: Context): String {
-			val reservationId = CookiePreference.getStoredReservationId(context)
-			return "reservation_system=$reservationId"
+		lateinit var sharedPreferences : SharedPreferences
+		
+		fun initialize(context: Context) {
+			sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 		}
-
-		fun getReservationCookie(reservationId: String): String {
-			return "reservation_system=$reservationId"
+		
+		fun getReservationId(): String {
+			return sharedPreferences.getString(COOKIE_RESERVATION_ID, "")!!
 		}
-
+		
+		fun setReservationId(reservationId: String) {
+			sharedPreferences.edit {
+				putString(COOKIE_RESERVATION_ID, reservationId)
+			}
+		}
+		
+		fun resetReservationId() {
+			sharedPreferences.edit {
+				putString(COOKIE_RESERVATION_ID, "")
+			}
+		}
+		
 	}
-
 }

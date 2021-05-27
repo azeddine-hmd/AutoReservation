@@ -1,81 +1,80 @@
 package com.innocent.learn.autoreservation.repositories
 
-import android.content.Context
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.room.Room
+import com.google.gson.JsonParser
 import com.innocent.learn.autoreservation.database.ReservationDao
-import com.innocent.learn.autoreservation.database.ReservationDatabase
 import com.innocent.learn.autoreservation.model.Slot
-import com.innocent.learn.autoreservation.network.ReservationRemote
-import java.util.concurrent.Executors
+import com.innocent.learn.autoreservation.network.ReservationApi
+import com.innocent.learn.autoreservation.network.ReservationResponse
+import retrofit2.HttpException
 
-private const val DATABASE_NAME = "slot-database"
 private const val TAG = "ReservationRepository"
 
-class ReservationRepository private constructor(context: Context) {
-	private val reservationRemote = ReservationRemote(context)
-	private val reservationDatabase: ReservationDatabase = Room.databaseBuilder(
-		context.applicationContext,
-		ReservationDatabase::class.java,
-		DATABASE_NAME
-	).build()
-	private val reservationDao: ReservationDao = reservationDatabase.reservationDao()
-	private val executor = Executors.newSingleThreadExecutor()
-
-	// network
-
-	fun fetchSlotList(cookie: String): LiveData<List<Slot>> = reservationRemote.fetchSlotList(cookie)
-
-	fun subscribe(cookie: String, slotId: Int): LiveData<Slot> = reservationRemote.subscribe(cookie, slotId)
-
-	fun unsubscribe(cookie: String, slotId: Int): LiveData<Slot> = reservationRemote.unsubscribe(cookie, slotId)
-
-	// database
-
-	fun getSlotList(): LiveData<List<Slot>> {
-		Log.d(TAG, "action triggered: get slot list from SQLite")
-		return reservationDao.getSlotList()
+class ReservationRepository private constructor(
+	private val network: ReservationApi,
+	private val dao: ReservationDao
+) {
+	
+	suspend fun fetchSlotList(): ReservationResponse<List<Slot>> = try {
+		val slotList = network.fetchSlotList()
+		Log.i(TAG, "fetchSlotList: $slotList")
+		dao.addSlotList(slotList)
+		ReservationResponse.Success(slotList)
+	} catch (cause: HttpException) {
+		val errorJson = cause.response()?.errorBody()?.string()
+		val message = JsonParser().parse(errorJson).asJsonObject["message"].asString
+		Log.e(TAG, "fetchSlotList: ${message}")
+		ReservationResponse.Failure(Throwable(message, cause))
+	} catch (cause: Throwable) {
+		Log.e(TAG, "fetchSlotList: ${cause.message}")
+		ReservationResponse.Failure(Throwable("Unable to fetch slot list", cause))
 	}
-
-	fun getSlot(id: Int): LiveData<Slot?> = reservationDao.getSlot(id)
-
-	fun addSlot(slot: Slot) {
-		reservationDao.addSlot(slot)
+	
+	suspend fun subscribe(slotId: Int): ReservationResponse<Slot> = try {
+		val slot = network.subscribe(slotId)
+		Log.i(TAG, "fetchSlotList: $slot")
+		dao.updateSlot(slot)
+		ReservationResponse.Success(slot)
+	} catch (cause: Throwable) {
+		Log.e(TAG, "fetchSlotList: ${cause.message}")
+		ReservationResponse.Failure(Throwable("Unable to subscribe", cause))
 	}
-
-	fun deleteAllSlot() {
-		executor.execute {
-			reservationDao.deleteAllSlot()
-		}
+	
+	suspend fun unsubscribe(slotId: Int): ReservationResponse<Slot> = try {
+		val slot = network.unsubscribe(slotId)
+		Log.i(TAG, "fetchSlotList: $slot")
+		dao.updateSlot(slot)
+		ReservationResponse.Success(slot)
+	} catch (cause: Throwable) {
+		Log.e(TAG, "fetchSlotList: ${cause.message}")
+		ReservationResponse.Failure(Throwable("Unable to unsubscribe", cause))
 	}
-
-	fun updateSlot(slot: Slot) {
-		executor.execute {
-			Log.d(TAG, "action triggered: updating slot to SQLite")
-			reservationDao.updateSlot(slot)
-		}
-	}
-
-	fun addSlotList(slotList: List<Slot>) {
-		executor.execute {
-			reservationDao.addSlotList(slotList)
-		}
-	}
-
+	
+	suspend fun getSlotList(): List<Slot> = dao.getSlotList()
+	
+	suspend fun getSlot(id: Int): Slot = dao.getSlot(id)
+	
+	suspend fun addSlot(slot: Slot) = dao.addSlot(slot)
+	
+	suspend fun deleteAllSlots() = dao.deleteAllSlot()
+	
+	suspend fun updateSlot(slot: Slot) = dao.updateSlot(slot)
+	
+	suspend fun addSlotList(slotList: List<Slot>) = dao.addSlotList(slotList)
+	
 	companion object {
 		private var instance: ReservationRepository? = null
-
-		fun initialize(context: Context) {
+		
+		fun initialize(network: ReservationApi, dao: ReservationDao) {
 			if (instance == null) {
-				instance = ReservationRepository(context)
+				instance = ReservationRepository(network, dao)
 			}
 		}
-
+		
 		fun get(): ReservationRepository {
 			return instance
 				?: throw IllegalStateException("ReservationRepository must be initialized")
 		}
 	}
-
+	
 }

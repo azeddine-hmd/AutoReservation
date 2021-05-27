@@ -31,7 +31,7 @@
             android:text="@string/reserved_places"
             app:layout_constraintBottom_toTopOf="@+id/guideline5"
             app:layout_constraintStart_toStartOf="@+id/center_guideline"
-            tools:text="60/75" />
+            tools:text="45/75" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/center_guideline"

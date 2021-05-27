@@ -1,4 +1,4 @@
-package com.innocent.learn.autoreservation.ui.adapters
+package com.innocent.learn.autoreservation.ui.reservation.adapter
 
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
@@ -12,15 +12,15 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.innocent.learn.autoreservation.R
-import com.innocent.learn.autoreservation.model.PageSlot
+import com.innocent.learn.autoreservation.model.SlotPage
 import com.innocent.learn.autoreservation.model.Slot
-import com.innocent.learn.autoreservation.ui.ReservationFragmentDirections
+import com.innocent.learn.autoreservation.ui.reservation.ReservationFragmentDirections
 import java.util.Date
 
 private const val TAG = "SlotViewPagerAdapter"
 
 class SlotViewPagerAdapter() : RecyclerView.Adapter<SlotViewPagerAdapter.SlotCardViewHolder>() {
-	var pageSlotList: List<PageSlot> = emptyList()
+	var slotPageList: List<SlotPage> = emptyList()
 
 	override fun onCreateViewHolder(
 		parent: ViewGroup,
@@ -32,19 +32,19 @@ class SlotViewPagerAdapter() : RecyclerView.Adapter<SlotViewPagerAdapter.SlotCar
 	}
 
 	override fun onBindViewHolder(holder: SlotCardViewHolder, position: Int) {
-		holder.bind(pageSlotList[position])
+		holder.bind(slotPageList[position])
 	}
 
-	override fun getItemCount(): Int = pageSlotList.size
+	override fun getItemCount(): Int = slotPageList.size
 
-	fun submitList(pageSlotList: List<PageSlot>) {
-		this.pageSlotList = pageSlotList
+	fun submitList(slotPageList: List<SlotPage>) {
+		this.slotPageList = slotPageList
 		notifyDataSetChanged()
 	}
 
 	class SlotCardViewHolder(item: View) :
 		RecyclerView.ViewHolder(item) {
-		private lateinit var pageSlot: PageSlot
+		private lateinit var pageSlot: SlotPage
 		private val morningLeftCardView: CardView = item.findViewById(R.id.morning_slot_left)
 		private val morningRightCardView: CardView = item.findViewById(R.id.morning_slot_right)
 		private val afternoonLeftCardView: CardView = item.findViewById(R.id.afternoon_slot_left)
@@ -54,7 +54,7 @@ class SlotViewPagerAdapter() : RecyclerView.Adapter<SlotViewPagerAdapter.SlotCar
 			setCardsListener()
 		}
 
-		fun bind(pageSlot: PageSlot) {
+		fun bind(pageSlot: SlotPage) {
 			this.pageSlot = pageSlot
 			setIndicators()
 			setReservedTexts()
@@ -141,13 +141,13 @@ class SlotViewPagerAdapter() : RecyclerView.Adapter<SlotViewPagerAdapter.SlotCar
 
 	}
 
-	class SlotDiffCallback : DiffUtil.ItemCallback<PageSlot>() {
+	class SlotDiffCallback : DiffUtil.ItemCallback<SlotPage>() {
 
-		override fun areItemsTheSame(oldItem: PageSlot, newItem: PageSlot): Boolean {
+		override fun areItemsTheSame(oldItem: SlotPage, newItem: SlotPage): Boolean {
 			return oldItem == newItem
 		}
 
-		override fun areContentsTheSame(oldItem: PageSlot, newItem: PageSlot): Boolean {
+		override fun areContentsTheSame(oldItem: SlotPage, newItem: SlotPage): Boolean {
 			return oldItem == newItem
 		}
 	}
