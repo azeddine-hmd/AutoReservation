@@ -1,18 +1,17 @@
-package com.innocent.learn.autoreservation.ui.reservation.dialog
+package com.innocent.learn.autoreservation.presentation.ui.reservation.dialog
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.innocent.learn.autoreservation.R
 import com.innocent.learn.autoreservation.databinding.DialogSubscribeBinding
-import com.innocent.learn.autoreservation.model.Slot
-import com.innocent.learn.autoreservation.network.ReservationResponse
-import com.innocent.learn.autoreservation.utils.CustomToast
+import com.innocent.learn.autoreservation.domain.model.Slot
+import com.innocent.learn.autoreservation.network.response.ReservationResponse
+import com.innocent.learn.autoreservation.domain.util.CustomToast
 
 private const val TAG = "SubscribeDialog"
 

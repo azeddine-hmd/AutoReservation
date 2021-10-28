@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.innocent.learn.autoreservation.model.Slot
+import com.innocent.learn.autoreservation.domain.model.Slot
 
 @Dao
 interface ReservationDao {

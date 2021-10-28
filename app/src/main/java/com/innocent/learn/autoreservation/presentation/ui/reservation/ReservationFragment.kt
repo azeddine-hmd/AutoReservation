@@ -1,4 +1,4 @@
-package com.innocent.learn.autoreservation.ui.reservation
+package com.innocent.learn.autoreservation.presentation.ui.reservation
 
 import android.os.Bundle
 import android.util.Log
@@ -12,10 +12,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.innocent.learn.autoreservation.R
 import com.innocent.learn.autoreservation.databinding.FragmentReservationBinding
-import com.innocent.learn.autoreservation.model.Slot
-import com.innocent.learn.autoreservation.network.ReservationResponse
-import com.innocent.learn.autoreservation.ui.reservation.adapter.SlotViewPagerAdapter
-import com.innocent.learn.autoreservation.utils.CustomToast
+import com.innocent.learn.autoreservation.domain.model.Slot
+import com.innocent.learn.autoreservation.network.response.ReservationResponse
+import com.innocent.learn.autoreservation.presentation.ui.reservation.adapter.SlotViewPagerAdapter
+import com.innocent.learn.autoreservation.domain.util.CustomToast
 
 private const val TAG = "ReservationFragment"
 
@@ -80,7 +80,7 @@ class ReservationFragment : Fragment() {
 	}
 	
 	private fun updateUI(slotList: List<Slot>) {
-		val slotPageList = viewModel.pageListConverter(slotList)
+		val pageList = viewModel.pageListConverter(slotList)
 		adapter.submitList(slotPageList)
 	}
 	

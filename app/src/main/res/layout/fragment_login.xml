@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        tool:context=".ui.login.LoginFragment">
+        tool:context=".presentation.ui.login.LoginFragment">
 
         <EditText
             android:id="@+id/reservation_edit_text"

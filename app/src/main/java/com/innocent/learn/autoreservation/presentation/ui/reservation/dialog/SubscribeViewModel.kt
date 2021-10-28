@@ -1,14 +1,12 @@
-package com.innocent.learn.autoreservation.ui.reservation.dialog
+package com.innocent.learn.autoreservation.presentation.ui.reservation.dialog
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.innocent.learn.autoreservation.model.Slot
-import com.innocent.learn.autoreservation.network.ReservationResponse
+import com.innocent.learn.autoreservation.domain.model.Slot
+import com.innocent.learn.autoreservation.network.response.ReservationResponse
 import com.innocent.learn.autoreservation.repositories.ReservationRepository
-import com.innocent.learn.autoreservation.utils.CookieHelper
 import kotlinx.coroutines.launch
 
 class SubscribeViewModel() : ViewModel() {

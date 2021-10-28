@@ -1,4 +1,4 @@
-package com.innocent.learn.autoreservation.model
+package com.innocent.learn.autoreservation.domain.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

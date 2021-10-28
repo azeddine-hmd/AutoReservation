@@ -1,6 +1,6 @@
-package com.innocent.learn.autoreservation.model
+package com.innocent.learn.autoreservation.domain.model
 
-data class SlotPage(
+data class Page(
 	val topLeft: Slot,
 	val topRight: Slot,
 	val bottomLeft: Slot,

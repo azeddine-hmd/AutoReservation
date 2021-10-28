@@ -1,4 +1,4 @@
-package com.innocent.learn.autoreservation.network
+package com.innocent.learn.autoreservation.network.response
 
 sealed class ReservationResponse<out T> {
 	data class Success<T>(val data: T): ReservationResponse<T>()

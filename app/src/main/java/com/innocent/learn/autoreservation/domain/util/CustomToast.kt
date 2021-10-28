@@ -1,7 +1,6 @@
-package com.innocent.learn.autoreservation.utils
+package com.innocent.learn.autoreservation.domain.util
 
 import android.content.Context
-import android.graphics.Color
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.widget.TextView

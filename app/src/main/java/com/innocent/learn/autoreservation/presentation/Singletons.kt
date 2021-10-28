@@ -1,4 +1,4 @@
-package com.innocent.learn.autoreservation
+package com.innocent.learn.autoreservation.presentation
 
 import android.content.Context
 import androidx.room.Room
@@ -6,7 +6,7 @@ import com.innocent.learn.autoreservation.database.ReservationDao
 import com.innocent.learn.autoreservation.database.ReservationDatabase
 import com.innocent.learn.autoreservation.network.reservationNetwork
 import com.innocent.learn.autoreservation.repositories.ReservationRepository
-import com.innocent.learn.autoreservation.utils.CookieHelper
+import com.innocent.learn.autoreservation.domain.util.CookieHelper
 
 private val DATABASE_NAME = "slot-database"
 
@@ -26,6 +26,7 @@ object Singletons {
 		
 		// initializing Utils
 		CookieHelper.initialize(context)
+	
 	}
 	
 }

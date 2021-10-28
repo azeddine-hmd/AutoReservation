@@ -1,12 +1,12 @@
-package com.innocent.learn.autoreservation.ui.reservation
+package com.innocent.learn.autoreservation.presentation.ui.reservation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.innocent.learn.autoreservation.model.Slot
-import com.innocent.learn.autoreservation.model.SlotPage
-import com.innocent.learn.autoreservation.network.ReservationResponse
+import com.innocent.learn.autoreservation.domain.model.Slot
+import com.innocent.learn.autoreservation.domain.model.Page
+import com.innocent.learn.autoreservation.network.response.ReservationResponse
 import com.innocent.learn.autoreservation.repositories.ReservationRepository
 import kotlinx.coroutines.launch
 
@@ -31,16 +31,16 @@ class ReservationViewModel() : ViewModel() {
 		return livedata
 	}
 	
-	fun pageListConverter(slotList: List<Slot>): List<SlotPage> {
+	fun pageListConverter(slotList: List<Slot>): List<Page> {
 		val mutableSlotList = slotList.toMutableList()
-		val slotPageList = mutableListOf<SlotPage>()
+		val slotPageList = mutableListOf<Page>()
 		while (mutableSlotList.isNotEmpty()) {
 			try {
 				val topLeft = mutableSlotList.removeFirst()
 				val topRight = mutableSlotList.removeFirst()
 				val bottomLeft = mutableSlotList.removeFirst()
 				val bottomRight = mutableSlotList.removeFirst()
-				val slotPage = SlotPage(topLeft, topRight, bottomLeft, bottomRight)
+				val slotPage = Page(topLeft, topRight, bottomLeft, bottomRight)
 				slotPageList.add(slotPage)
 			} catch (e: NoSuchElementException) {
 				throw IllegalStateException("slotPageConverter: ${e.cause}")

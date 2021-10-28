@@ -1,4 +1,4 @@
-package com.innocent.learn.autoreservation.utils
+package com.innocent.learn.autoreservation.domain.util
 
 import android.content.Context
 import android.content.SharedPreferences

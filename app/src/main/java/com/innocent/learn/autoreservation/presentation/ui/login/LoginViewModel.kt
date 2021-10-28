@@ -1,13 +1,12 @@
-package com.innocent.learn.autoreservation.ui.login
+package com.innocent.learn.autoreservation.presentation.ui.login
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.innocent.learn.autoreservation.model.Slot
-import com.innocent.learn.autoreservation.network.ReservationResponse
+import com.innocent.learn.autoreservation.domain.model.Slot
+import com.innocent.learn.autoreservation.network.response.ReservationResponse
 import com.innocent.learn.autoreservation.repositories.ReservationRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class LoginViewModel() : ViewModel() {

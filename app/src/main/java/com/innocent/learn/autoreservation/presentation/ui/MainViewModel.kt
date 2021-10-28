@@ -1,9 +1,9 @@
-package com.innocent.learn.autoreservation.ui
+package com.innocent.learn.autoreservation.presentation.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.innocent.learn.autoreservation.repositories.ReservationRepository
-import com.innocent.learn.autoreservation.utils.CookieHelper
+import com.innocent.learn.autoreservation.domain.util.CookieHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

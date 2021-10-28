@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_margin="1dp"
-        tool:context=".ui.reservation.ReservationFragment">
+        tool:context=".presentation.ui.reservation.ReservationFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

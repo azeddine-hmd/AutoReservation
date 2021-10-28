@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/login_fragment"
-        android:name="com.innocent.learn.autoreservation.ui.login.LoginFragment"
+        android:name="com.innocent.learn.autoreservation.presentation.ui.login.LoginFragment"
         android:label="Login"
         tools:layout="@layout/fragment_login">
         <action
@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/reservation_fragment"
-        android:name="com.innocent.learn.autoreservation.ui.reservation.ReservationFragment"
+        android:name="com.innocent.learn.autoreservation.presentation.ui.reservation.ReservationFragment"
         android:label="Reservation"
         tools:layout="@layout/fragment_reservation">
         <action
@@ -29,7 +29,7 @@
 
     <dialog
         android:id="@+id/subscribe_dialog"
-        android:name="com.innocent.learn.autoreservation.ui.reservation.dialog.SubscribeDialog"
+        android:name="com.innocent.learn.autoreservation.presentation.ui.reservation.dialog.SubscribeDialog"
         android:label="Subscribe Dialog"
         tools:layout="@layout/dialog_subscribe">
         <argument

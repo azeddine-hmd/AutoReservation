@@ -1,4 +1,4 @@
-package com.innocent.learn.autoreservation.ui
+package com.innocent.learn.autoreservation.presentation.ui
 
 import android.os.Bundle
 import android.view.Menu

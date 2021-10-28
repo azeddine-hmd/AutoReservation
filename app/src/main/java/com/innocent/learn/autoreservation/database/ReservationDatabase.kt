@@ -3,7 +3,7 @@ package com.innocent.learn.autoreservation.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.innocent.learn.autoreservation.model.Slot
+import com.innocent.learn.autoreservation.domain.model.Slot
 
 @Database(entities = [Slot::class], version = 1, exportSchema = false)
 @TypeConverters(ReservationTypeConverters::class)
