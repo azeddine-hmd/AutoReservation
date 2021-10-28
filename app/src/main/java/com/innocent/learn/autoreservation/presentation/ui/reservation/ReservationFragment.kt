@@ -81,7 +81,7 @@ class ReservationFragment : Fragment() {
 	
 	private fun updateUI(slotList: List<Slot>) {
 		val pageList = viewModel.pageListConverter(slotList)
-		adapter.submitList(slotPageList)
+		adapter.submitList(pageList)
 	}
 	
 	private fun changeTitle() {
